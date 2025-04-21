@@ -3,18 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/tasksFragment">
+    app:startDestination="@id/nav_tasks">
     <fragment
-        android:id="@+id/tasksFragment"
+        android:id="@+id/nav_tasks"
         android:name="de.janniqz.sustainabilitytracker.TasksFragment"
         android:label="@string/fragment_tasks_label"
-        tools:layout="@layout/fragment_tasks">
-        <action
-            android:id="@+id/action_tasksFragment_to_statisticsFragment"
-            app:destination="@id/statisticsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_tasks"/>
     <fragment
-        android:id="@+id/statisticsFragment"
+        android:id="@+id/nav_statistics"
         android:name="de.janniqz.sustainabilitytracker.StatisticsFragment"
         android:label="@string/fragment_statistics_label"
         tools:layout="@layout/fragment_statistics" />

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_tasks"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_tasks"
+        android:title="@string/fragment_tasks_label"/>
+    <item
+        android:id="@+id/nav_statistics"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_statistics"
+        android:title="@string/fragment_statistics_label"/>
+</menu>
