@@ -1,10 +1,11 @@
-package de.janniqz.sustainabilitytracker
+package de.janniqz.sustainabilitytracker.ui.statistics
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import de.janniqz.sustainabilitytracker.R
 
 class StatisticsFragment : Fragment() {
 

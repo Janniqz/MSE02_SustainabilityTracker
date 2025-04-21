@@ -6,12 +6,22 @@
     app:startDestination="@id/nav_tasks">
     <fragment
         android:id="@+id/nav_tasks"
-        android:name="de.janniqz.sustainabilitytracker.TasksFragment"
+        android:name="de.janniqz.sustainabilitytracker.ui.tasks.TasksFragment"
         android:label="@string/fragment_tasks_label"
-        tools:layout="@layout/fragment_tasks"/>
+        tools:layout="@layout/fragment_tasks">
+        <action
+            android:id="@+id/action_createTask"
+            app:destination="@id/nav_create_task" />
+    </fragment>
     <fragment
         android:id="@+id/nav_statistics"
-        android:name="de.janniqz.sustainabilitytracker.StatisticsFragment"
+        android:name="de.janniqz.sustainabilitytracker.ui.statistics.StatisticsFragment"
         android:label="@string/fragment_statistics_label"
         tools:layout="@layout/fragment_statistics" />
+    <fragment
+        android:id="@+id/nav_create_task"
+        android:name="de.janniqz.sustainabilitytracker.ui.tasks.CreateTaskFragment"
+        android:label="@string/fragment_create_task_label"
+        tools:layout="@layout/fragment_create_task">
+    </fragment>
 </navigation>
