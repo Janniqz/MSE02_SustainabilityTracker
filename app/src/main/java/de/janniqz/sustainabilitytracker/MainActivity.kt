@@ -3,6 +3,7 @@ package de.janniqz.sustainabilitytracker
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,19 +20,35 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+        setupNavigation()
+    }
 
+    private fun setupNavigation() {
         val navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_tasks,
-            R.id.nav_statistics
-        ))
+        navController.addOnDestinationChangedListener { _, destination, _ -> onNavigationChanged(destination.id) }
+
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_tasks, R.id.nav_statistics))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         val bottomNav = binding.bottomNav
         bottomNav.setupWithNavController(navController)
+    }
+
+    private fun onNavigationChanged(destinationId: Int) {
+        val shouldShow = when (destinationId) {
+            R.id.nav_tasks, R.id.nav_statistics -> true
+            else -> false
+        }
+
+        binding.bottomNav.animate()
+            .alpha(if (shouldShow) 1f else 0f)
+            .setDuration(100)
+            .withStartAction { binding.bottomNav.visibility = View.VISIBLE }
+            .withEndAction { if (!shouldShow) binding.bottomNav.visibility = View.GONE }
+            .start()
     }
 
     override fun onSupportNavigateUp(): Boolean {
