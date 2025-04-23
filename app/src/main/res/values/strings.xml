@@ -4,8 +4,6 @@
     <string name="fragment_tasks_label">Tasks</string>
     <string name="fragment_statistics_label">Statistics</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fab_new_task_label">New Task</string>
     <string name="fragment_create_task_label">Create Task</string>
     <string name="fragment_create_predefined_task_label">Create Predefined Task</string>
