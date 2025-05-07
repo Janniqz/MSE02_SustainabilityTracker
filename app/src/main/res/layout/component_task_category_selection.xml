@@ -1,0 +1,41 @@
+<com.google.android.material.button.MaterialButtonToggleGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/category_toggle_group"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:padding="8dp"
+    app:selectionRequired="true"
+    app:singleSelection="true">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_co2"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/task_category_co2"
+        app:icon="@drawable/ic_category_co2"
+        app:iconPadding="0dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_water"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/task_category_water"
+        app:icon="@drawable/ic_category_water"
+        app:iconPadding="0dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_waste"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/task_category_waste"
+        app:icon="@drawable/ic_category_waste"
+        app:iconPadding="0dp" />
+</com.google.android.material.button.MaterialButtonToggleGroup>

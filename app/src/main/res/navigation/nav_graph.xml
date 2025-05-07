@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
+    android:label="@string/fragment_create_predefined_task_label"
     app:startDestination="@id/nav_tasks">
     <fragment
         android:id="@+id/nav_tasks"
@@ -23,5 +24,13 @@
         android:name="de.janniqz.sustainabilitytracker.ui.tasks.CreateTaskFragment"
         android:label="@string/fragment_create_task_label"
         tools:layout="@layout/fragment_create_task">
+        <action
+            android:id="@+id/action_createPredefinedTask"
+            app:destination="@id/nav_create_predefined_task" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_create_predefined_task"
+        android:name="de.janniqz.sustainabilitytracker.ui.tasks.CreatePredefinedTaskFragment"
+        android:label="@string/fragment_create_predefined_task_label"
+        tools:layout="@layout/fragment_create_predefined_task" />
 </navigation>

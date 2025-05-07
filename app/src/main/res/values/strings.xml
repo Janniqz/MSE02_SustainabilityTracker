@@ -3,13 +3,17 @@
     <string name="action_settings">Settings</string>
     <string name="fragment_tasks_label">Tasks</string>
     <string name="fragment_statistics_label">Statistics</string>
-
-    <string name="fab_new_task_label">New Task</string>
     <string name="fragment_create_task_label">Create Task</string>
     <string name="fragment_create_predefined_task_label">Create Predefined Task</string>
+
+    <string name="fab_new_task_label">New Task</string>
 
     <string name="task_type_predefined_title">Predefined Task</string>
     <string name="task_type_predefined_desc">Choose from a predefined selection of tasks with set metrics and categories.</string>
     <string name="task_type_custom_title">Custom Task</string>
     <string name="task_type_custom_desc">Create your own tasks with custom details to track your impact.</string>
+
+    <string name="task_category_co2">CO₂</string>
+    <string name="task_category_water">Water</string>
+    <string name="task_category_waste">Waste</string>
 </resources>

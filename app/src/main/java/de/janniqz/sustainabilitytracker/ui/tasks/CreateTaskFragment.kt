@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.databinding.FragmentCreateTaskBinding
 
@@ -24,8 +25,8 @@ class CreateTaskFragment : Fragment() {
         binding.btnPredefined.btnTitle.setText(R.string.task_type_predefined_title)
         binding.btnPredefined.btnDesc.setText(R.string.task_type_predefined_desc)
         binding.btnPredefined.btnIcon.setImageResource(R.drawable.ic_task_predefined)
-        binding.btnPredefined.btnRoot.setOnClickListener {
-
+        binding.btnPredefined.btnRoot.setOnClickListener { _ ->
+            findNavController().navigate(R.id.action_createPredefinedTask)
         }
 
         binding.btnCustom.btnTitle.setText(R.string.task_type_custom_title)
@@ -35,5 +36,4 @@ class CreateTaskFragment : Fragment() {
 
         }
     }
-
 }
