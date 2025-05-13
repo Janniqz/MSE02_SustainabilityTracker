@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
@@ -22,7 +23,7 @@ class CreatePredefinedTaskFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        templateListAdapter = TaskTemplateAdapter(requireContext(), mutableListOf())
+        templateListAdapter = TaskTemplateAdapter(requireContext(), mutableListOf(), ::showTaskDialog)
         binding.templateList.adapter = templateListAdapter
         binding.categorySelection.btnCo2.isChecked = true
 
@@ -40,5 +41,11 @@ class CreatePredefinedTaskFragment : Fragment() {
         templateListAdapter.clear()
         templateListAdapter.addAll(taskTemplates)
         templateListAdapter.notifyDataSetChanged()
+    }
+
+    private fun showTaskDialog(taskTemplate: TaskTemplate) {
+        val dialog = DialogCreatePredefinedFragment()
+        dialog.arguments = bundleOf("taskTemplate" to taskTemplate)
+        dialog.show(getParentFragmentManager(), "CPT")
     }
 }

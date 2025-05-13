@@ -20,4 +20,11 @@
     <string name="task_data_km">Distance (km)</string>
     <string name="task_data_item_no">Number of Items</string>
     <string name="task_data_shower_duration">Shower Duration (minutes)</string>
+
+    <string name="task_create_name">Task Name</string>
+    <string name="task_create_name_help">Task Variant Name</string>
+    <string name="task_create">Create Task</string>
+
+    <string name="general_cancel">Cancel</string>
+    <string name="general_value">Value</string>
 </resources>

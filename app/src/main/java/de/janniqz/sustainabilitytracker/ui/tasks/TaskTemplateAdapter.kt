@@ -10,7 +10,7 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.databinding.ComponentTaskTypeButtonBinding
 
-class TaskTemplateAdapter(context: Context, taskTemplates: List<TaskTemplate>) : ArrayAdapter<TaskTemplate>(context, 0, taskTemplates) {
+class TaskTemplateAdapter(context: Context, taskTemplates: List<TaskTemplate>, private val taskClickFunc: (TaskTemplate) -> Unit) : ArrayAdapter<TaskTemplate>(context, 0, taskTemplates) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = if (convertView == null) {
@@ -30,7 +30,7 @@ class TaskTemplateAdapter(context: Context, taskTemplates: List<TaskTemplate>) :
         binding.btnDesc.text = taskTemplate.description
         binding.btnIcon.setImageResource(icon)
         binding.btnRoot.setOnClickListener {
-            // TODO
+            taskClickFunc(taskTemplate)
         }
 
         return binding.root
