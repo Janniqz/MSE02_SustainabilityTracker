@@ -4,5 +4,6 @@ data class TaskTemplate(
     val name: String,
     val description: String,
     val category: TaskCategory,
-    val multiplier: Float
+    val multiplier: Float,
+    val requiredData: List<Int> = emptyList()
 )
