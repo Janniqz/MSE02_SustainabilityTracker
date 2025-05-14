@@ -1,8 +1,6 @@
 package de.janniqz.sustainabilitytracker
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController

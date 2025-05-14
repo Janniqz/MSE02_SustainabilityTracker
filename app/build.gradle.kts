@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,6 +41,11 @@ android {
 }
 
 dependencies {
+
+    // Database
+    implementation(libs.androidx.room.runtime)
+    kapt(libs.androidx.room.compiler)
+    testImplementation(libs.androidx.room.testing)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
