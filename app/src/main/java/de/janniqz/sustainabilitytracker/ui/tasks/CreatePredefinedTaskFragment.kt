@@ -44,7 +44,7 @@ class CreatePredefinedTaskFragment : Fragment() {
     }
 
     private fun showTaskDialog(taskTemplate: TaskTemplate) {
-        val dialog = DialogCreatePredefinedFragment()
+        val dialog = PredefinedTaskDialogFragment()
         dialog.arguments = bundleOf("taskTemplate" to taskTemplate)
         dialog.show(getParentFragmentManager(), "CPT")
     }

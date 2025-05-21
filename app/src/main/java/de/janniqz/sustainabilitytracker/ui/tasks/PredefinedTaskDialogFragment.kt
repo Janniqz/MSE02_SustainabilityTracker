@@ -14,19 +14,19 @@ import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.ComponentTextInputBinding
-import de.janniqz.sustainabilitytracker.databinding.DialogCreatePredefinedBinding
+import de.janniqz.sustainabilitytracker.databinding.DialogPredefinedTaskBinding
 import kotlinx.coroutines.launch
 
-class DialogCreatePredefinedFragment : DialogFragment() {
+class PredefinedTaskDialogFragment : DialogFragment() {
 
-    private lateinit var binding: DialogCreatePredefinedBinding
+    private lateinit var binding: DialogPredefinedTaskBinding
     private var taskDataFields: MutableList<ComponentTextInputBinding> = mutableListOf<ComponentTextInputBinding>()
     private var taskTemplate: TaskTemplate? = null
 
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = requireContext()
-        binding = DialogCreatePredefinedBinding.inflate(layoutInflater)
+        binding = DialogPredefinedTaskBinding.inflate(layoutInflater)
 
         taskTemplate = arguments?.getParcelable("taskTemplate")
         taskTemplate?.let { populateDialog() }
