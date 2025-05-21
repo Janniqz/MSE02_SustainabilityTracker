@@ -1,6 +1,7 @@
 package de.janniqz.sustainabilitytracker.data.model.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -12,7 +13,8 @@ import androidx.room.PrimaryKey
             childColumns = ["taskId"],
             onDelete = androidx.room.ForeignKey.CASCADE
         )
-    ])
+    ],
+    indices = [Index(value = ["taskId"])])
 data class TaskCompletionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,

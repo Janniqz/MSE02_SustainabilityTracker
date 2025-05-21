@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
+import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.ComponentTextInputBinding
 import de.janniqz.sustainabilitytracker.databinding.DialogCreatePredefinedBinding
@@ -63,18 +64,22 @@ class DialogCreatePredefinedFragment : DialogFragment() {
 
     private fun createTask() {
         val template = taskTemplate!!
-        var multiplier = template.multiplier
+        var savings = template.multiplier
         if (template.requiredData != null) {
-            multiplier *= taskDataFields
+            savings *= taskDataFields
                 .map { it.inputField.text.toString().toFloat() }  // TODO Validation
                 .first()  // TODO Adjust if adding multiple data fields
         }
 
         val task = TaskEntity(
             name = binding.inputTaskName.inputField.text.toString(),
+            type = TaskType.Predefined,
             category = template.category,
-            multiplier = multiplier,
-            createdAt = System.currentTimeMillis()
+            savings = savings,
+            createdAt = System.currentTimeMillis(),
+
+            description = template.description,
+            multiplier = template.multiplier
         )
 
         val db = AppDatabase.getInstance(requireContext())
