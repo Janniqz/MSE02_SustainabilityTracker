@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import de.janniqz.sustainabilitytracker.data.db.converter.TaskCategoryConverter
+import de.janniqz.sustainabilitytracker.data.db.converter.TaskTypeConverter
 import de.janniqz.sustainabilitytracker.data.db.dao.TaskCompletionDao
 import de.janniqz.sustainabilitytracker.data.db.dao.TaskDao
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
@@ -15,7 +16,7 @@ import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
     version = 1,
     exportSchema = false
 )
-@TypeConverters(TaskCategoryConverter::class)
+@TypeConverters(TaskCategoryConverter::class, TaskTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     // DAOs

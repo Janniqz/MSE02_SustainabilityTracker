@@ -70,7 +70,7 @@ class DialogCreatePredefinedFragment : DialogFragment() {
         var savings = template.multiplier
         if (template.requiredData != null) {
             savings *= taskDataFields
-                .map { it.inputField.text.toString().toFloat() }  // TODO Validation
+                .map { it.inputField.text.toString().toFloat() }
                 .first()  // Only one requiredData field is supported
         }
 
@@ -112,7 +112,7 @@ class DialogCreatePredefinedFragment : DialogFragment() {
             } else {
                 try {
                     field.inputField.text.toString().toFloat()
-                } catch (e: NumberFormatException) {
+                } catch (_: NumberFormatException) {
                     field.inputContainer.error = getString(R.string.general_invalid_number)
                     isValid = false
                 }
