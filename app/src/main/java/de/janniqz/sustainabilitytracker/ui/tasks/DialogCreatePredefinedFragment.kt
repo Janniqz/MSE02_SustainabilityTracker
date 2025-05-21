@@ -63,12 +63,15 @@ class DialogCreatePredefinedFragment : DialogFragment() {
     }
 
     private fun createTask() {
+        if (!validateData())
+            return
+
         val template = taskTemplate!!
         var savings = template.multiplier
         if (template.requiredData != null) {
             savings *= taskDataFields
                 .map { it.inputField.text.toString().toFloat() }  // TODO Validation
-                .first()  // TODO Adjust if adding multiple data fields
+                .first()  // Only one requiredData field is supported
         }
 
         val task = TaskEntity(
@@ -89,5 +92,34 @@ class DialogCreatePredefinedFragment : DialogFragment() {
             findNavController().navigate(R.id.action_returnToTaskOverview)
             dialog?.dismiss()
         }
+    }
+
+    private fun validateData(): Boolean {
+        var isValid = true
+
+        val taskNameComponent = binding.inputTaskName
+        if (taskNameComponent.inputField.text.isNullOrEmpty()) {
+            taskNameComponent.inputContainer.error = getString(R.string.general_required)
+            isValid = false
+        } else {
+            taskNameComponent.inputContainer.error = null
+        }
+
+        taskDataFields.forEach { field ->
+            if (field.inputField.text.isNullOrEmpty()) {
+                field.inputContainer.error = getString(R.string.general_required)
+                isValid = false
+            } else {
+                try {
+                    field.inputField.text.toString().toFloat()
+                } catch (e: NumberFormatException) {
+                    field.inputContainer.error = getString(R.string.general_invalid_number)
+                    isValid = false
+                }
+                field.inputContainer.error = null
+            }
+        }
+
+        return isValid
     }
 }
