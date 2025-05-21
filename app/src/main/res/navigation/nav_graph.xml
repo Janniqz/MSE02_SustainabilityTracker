@@ -32,5 +32,11 @@
         android:id="@+id/nav_create_predefined_task"
         android:name="de.janniqz.sustainabilitytracker.ui.tasks.CreatePredefinedTaskFragment"
         android:label="@string/fragment_create_predefined_task_label"
-        tools:layout="@layout/fragment_create_predefined_task" />
+        tools:layout="@layout/fragment_create_predefined_task" >
+        <action
+            android:id="@+id/action_returnToTaskOverview"
+            app:destination="@id/nav_tasks"
+            app:popUpTo="@id/nav_tasks"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>
