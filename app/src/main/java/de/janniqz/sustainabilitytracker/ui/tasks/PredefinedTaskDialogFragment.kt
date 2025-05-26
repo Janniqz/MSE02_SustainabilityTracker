@@ -81,8 +81,7 @@ class PredefinedTaskDialogFragment : DialogFragment() {
             savings = savings,
             createdAt = System.currentTimeMillis(),
 
-            description = template.description,
-            multiplier = template.multiplier
+            templateId = template.id
         )
 
         val db = AppDatabase.getInstance(requireContext())

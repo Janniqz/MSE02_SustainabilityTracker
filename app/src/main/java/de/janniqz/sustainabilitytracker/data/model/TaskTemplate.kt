@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class TaskTemplate(
+    val id: Int,
     val name: String,
     val description: String,
     val category: TaskCategory,

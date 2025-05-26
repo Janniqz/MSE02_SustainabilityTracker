@@ -16,6 +16,5 @@ data class TaskEntity(
     val createdAt: Long,
 
     // Predefined only
-    val description: String? = null,
-    val multiplier: Float? = null
+    val templateId: Int? = null
 )
