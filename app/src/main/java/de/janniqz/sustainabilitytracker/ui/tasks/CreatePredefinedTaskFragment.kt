@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
@@ -16,7 +15,7 @@ import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogCrea
 class CreatePredefinedTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentCreatePredefinedTaskBinding
-    private lateinit var templateListAdapter: ArrayAdapter<TaskTemplate>
+    private lateinit var templateListAdapter: TaskTemplateAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreatePredefinedTaskBinding.inflate(inflater, container, false)

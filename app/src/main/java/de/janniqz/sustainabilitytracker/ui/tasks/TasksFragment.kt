@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,8 +16,10 @@ import kotlinx.coroutines.launch
 class TasksFragment : Fragment() {
 
     private lateinit var binding: FragmentTasksBinding
-    private lateinit var taskListAdapter: ArrayAdapter<TaskEntity>
+    private lateinit var taskListAdapter: TaskDisplayAdapter
     private lateinit var database: AppDatabase
+
+    private var currentTasks: MutableList<TaskEntity> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTasksBinding.inflate(inflater, container, false)
@@ -27,13 +28,31 @@ class TasksFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.fabNewTask.setOnClickListener { view ->
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.fabNewTask.setOnClickListener {
             findNavController().navigate(R.id.action_createTask)
         }
 
+        // Initialize the task list adapter with an empty list and the action handlers
+        taskListAdapter = TaskDisplayAdapter(requireContext(), currentTasks, ::onEditTask, ::onCompleteTask, ::onDeleteTask)
+        binding.taskList.adapter = taskListAdapter
+
+        // Load tasks from the database
+        loadTasks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadTasks()
+    }
+
+    private fun loadTasks() {
         lifecycleScope.launch {
-            taskListAdapter = TaskDisplayAdapter(requireContext(), database.task().getAll(), ::onEditTask, ::onCompleteTask, ::onDeleteTask)
-            binding.taskList.adapter = taskListAdapter
+            val tasksFromDb = database.task().getAll()
+            currentTasks.clear()
+            currentTasks.addAll(tasksFromDb)
+            taskListAdapter.notifyDataSetChanged()
         }
     }
 
