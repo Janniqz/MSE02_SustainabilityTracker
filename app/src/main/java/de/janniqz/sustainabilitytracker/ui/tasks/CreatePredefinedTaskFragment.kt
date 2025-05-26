@@ -11,6 +11,7 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplates
 import de.janniqz.sustainabilitytracker.databinding.FragmentCreatePredefinedTaskBinding
+import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogCreateFragment
 
 class CreatePredefinedTaskFragment : Fragment() {
 
@@ -44,8 +45,8 @@ class CreatePredefinedTaskFragment : Fragment() {
     }
 
     private fun showTaskDialog(taskTemplate: TaskTemplate) {
-        val dialog = PredefinedTaskDialogFragment()
+        val dialog = PredefinedTaskDialogCreateFragment()
         dialog.arguments = bundleOf("taskTemplate" to taskTemplate)
-        dialog.show(getParentFragmentManager(), "CPT")
+        dialog.show(getParentFragmentManager(), "CreatePredefinedTask")
     }
 }
