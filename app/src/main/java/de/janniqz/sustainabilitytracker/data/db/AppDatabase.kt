@@ -13,7 +13,7 @@ import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 
 @Database(
     entities = [TaskEntity::class, TaskCompletionEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(TaskCategoryConverter::class, TaskTypeConverter::class)
@@ -35,7 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                         context.applicationContext,
                         AppDatabase::class.java,
                         "sustainability_database"
-                    ).build()
+                    ).fallbackToDestructiveMigration(true).build()  // TODO Remove destructive migration in future versions
 
                     INSTANCE = instance
                 }

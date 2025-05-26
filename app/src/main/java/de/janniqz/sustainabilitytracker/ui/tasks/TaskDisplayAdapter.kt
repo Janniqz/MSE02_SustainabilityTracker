@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
+import de.janniqz.sustainabilitytracker.data.model.TaskTemplates
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.ComponentTaskDisplayBinding
@@ -31,7 +32,8 @@ class TaskDisplayAdapter(context: Context, tasks: List<TaskEntity>, private val 
         binding.taskCategoryIcon.setImageResource(icon)
 
         if (task.type == TaskType.Predefined) {
-            binding.taskDescription.text = task.description
+            val template = TaskTemplates.getTemplateById(task.templateId!!)!!
+            binding.taskDescription.text = template.description
         } else {
             binding.taskDescription.text = ""
         }

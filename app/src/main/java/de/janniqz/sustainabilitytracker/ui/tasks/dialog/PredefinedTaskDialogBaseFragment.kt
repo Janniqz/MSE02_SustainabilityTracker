@@ -12,17 +12,18 @@ import de.janniqz.sustainabilitytracker.databinding.DialogPredefinedTaskBinding
 
 abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
 
-    protected lateinit var context: Context
+    protected lateinit var dialogContext: Context
     protected lateinit var binding: DialogPredefinedTaskBinding
     protected var taskDataFields: MutableList<ComponentTextInputBinding> = mutableListOf<ComponentTextInputBinding>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        context = requireContext()
+        dialogContext = requireContext()
         binding = DialogPredefinedTaskBinding.inflate(layoutInflater)
 
         populateBaseDialog()
+        populateDialog()
 
-        val builder = AlertDialog.Builder(context).setView(binding.root)
+        val builder = AlertDialog.Builder(dialogContext).setView(binding.root)
         val dialog = builder.create()
         dialog.window?.setBackgroundDrawableResource(R.color.transparent)
         return dialog
@@ -30,8 +31,8 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
 
     private fun populateBaseDialog() {
         binding.inputTaskName.inputField.setInputType(InputType.TYPE_CLASS_TEXT)
-        binding.inputTaskName.inputContainer.hint = context.getString(R.string.task_create_name)
-        binding.inputTaskName.inputContainer.helperText = context.getString(R.string.task_create_name_help)
+        binding.inputTaskName.inputContainer.hint = dialogContext.getString(R.string.task_create_name)
+        binding.inputTaskName.inputContainer.helperText = dialogContext.getString(R.string.task_create_name_help)
 
         binding.buttonCancel.setOnClickListener { dialog?.dismiss() }
     }
@@ -41,8 +42,8 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
     protected fun createDataField(helpResource: Int) {
         val inputBinding = ComponentTextInputBinding.inflate(layoutInflater)
         inputBinding.inputField.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)
-        inputBinding.inputContainer.hint = context.getString(R.string.general_value)
-        inputBinding.inputContainer.helperText = context.getString(helpResource)
+        inputBinding.inputContainer.hint = dialogContext.getString(R.string.general_value)
+        inputBinding.inputContainer.helperText = dialogContext.getString(helpResource)
 
         taskDataFields.add(inputBinding)
         binding.containerRequiredData.addView(inputBinding.root)
