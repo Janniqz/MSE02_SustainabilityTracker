@@ -5,12 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentTasksBinding
+import de.janniqz.sustainabilitytracker.ui.tasks.dialog.DeleteTaskDialogFragment
+import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogEditFragment
 import kotlinx.coroutines.launch
 
 class TasksFragment : Fragment() {
@@ -38,13 +43,28 @@ class TasksFragment : Fragment() {
         taskListAdapter = TaskDisplayAdapter(requireContext(), currentTasks, ::onEditTask, ::onCompleteTask, ::onDeleteTask)
         binding.taskList.adapter = taskListAdapter
 
+        createListeners()
+
         // Load tasks from the database
         loadTasks()
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadTasks()
+    private fun createListeners() {
+        // TODO Combine these
+
+        // Add listener for Task Edits
+        setFragmentResultListener(PredefinedTaskDialogEditFragment.REQUEST_KEY) { requestKey, bundle ->
+            val taskEdited = bundle.getBoolean(PredefinedTaskDialogEditFragment.RESULT_KEY_TASK_EDITED)
+            if (taskEdited)
+                loadTasks() // Refresh the list
+        }
+
+        // Add listener for Task Deletions
+        setFragmentResultListener(DeleteTaskDialogFragment.REQUEST_KEY) { requestKey, bundle ->
+            val taskDeleted = bundle.getBoolean(DeleteTaskDialogFragment.RESULT_KEY_TASK_DELETED)
+            if (taskDeleted)
+                loadTasks() // Refresh the list
+        }
     }
 
     private fun loadTasks() {
@@ -57,7 +77,13 @@ class TasksFragment : Fragment() {
     }
 
     private fun onEditTask(task: TaskEntity) {
-        // TODO
+        if (task.type == TaskType.Predefined) {
+            val dialog = PredefinedTaskDialogEditFragment()
+            dialog.arguments = bundleOf("taskData" to task)
+            dialog.show(getParentFragmentManager(), PredefinedTaskDialogEditFragment.TAG)
+        } else {
+            // TODO
+        }
     }
 
     private fun onCompleteTask(task: TaskEntity) {
@@ -65,7 +91,9 @@ class TasksFragment : Fragment() {
     }
 
     private fun onDeleteTask(task: TaskEntity) {
-        // TODO
+        val dialog = DeleteTaskDialogFragment()
+        dialog.arguments = bundleOf("taskData" to task)
+        dialog.show(getParentFragmentManager(), DeleteTaskDialogFragment.TAG)
     }
 
 }

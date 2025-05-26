@@ -2,6 +2,8 @@ package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
 import AppDatabase
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
@@ -13,6 +15,12 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
 
     private var task: TaskEntity? = null
     private lateinit var template: TaskTemplate
+
+    companion object {
+        const val TAG = "EditPredefinedTask"
+        const val REQUEST_KEY = "editTaskRequest"
+        const val RESULT_KEY_TASK_EDITED = "taskEdited"
+    }
 
     override fun populateDialog() {
         task = arguments?.getParcelable("taskData")
@@ -48,10 +56,9 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
         val db = AppDatabase.getInstance(requireContext())
         lifecycleScope.launch {
             db.task().update(taskData)
+            setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY_TASK_EDITED to true))
             Toast.makeText(requireContext(), R.string.task_updated, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
-
-            // TODO Task list needs to be refreshed
         }
     }
 

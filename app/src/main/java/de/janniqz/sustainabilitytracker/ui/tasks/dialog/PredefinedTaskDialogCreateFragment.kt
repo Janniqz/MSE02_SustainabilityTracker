@@ -14,6 +14,10 @@ class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
 
     private var taskTemplate: TaskTemplate? = null
 
+    companion object {
+        const val TAG = "CreatePredefinedTask"
+    }
+
     override fun populateDialog() {
         taskTemplate = arguments?.getParcelable("taskTemplate")
         taskTemplate?.let { template ->

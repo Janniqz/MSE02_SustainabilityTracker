@@ -23,6 +23,9 @@ class CreatePredefinedTaskFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize the template list adapter with an empty list and a click listener
         templateListAdapter = TaskTemplateAdapter(requireContext(), mutableListOf(), ::showTaskDialog)
         binding.templateList.adapter = templateListAdapter
         binding.categorySelection.btnCo2.isChecked = true
@@ -46,6 +49,6 @@ class CreatePredefinedTaskFragment : Fragment() {
     private fun showTaskDialog(taskTemplate: TaskTemplate) {
         val dialog = PredefinedTaskDialogCreateFragment()
         dialog.arguments = bundleOf("taskTemplate" to taskTemplate)
-        dialog.show(getParentFragmentManager(), "CreatePredefinedTask")
+        dialog.show(getParentFragmentManager(), PredefinedTaskDialogCreateFragment.TAG)
     }
 }
