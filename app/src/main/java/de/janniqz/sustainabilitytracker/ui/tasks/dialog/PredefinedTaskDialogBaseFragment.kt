@@ -7,14 +7,14 @@ import android.text.InputType
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import de.janniqz.sustainabilitytracker.R
-import de.janniqz.sustainabilitytracker.databinding.ComponentTextInputBinding
+import de.janniqz.sustainabilitytracker.databinding.ComponentTextInputPaddingBinding
 import de.janniqz.sustainabilitytracker.databinding.DialogPredefinedTaskBinding
 
 abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
 
     protected lateinit var dialogContext: Context
     protected lateinit var binding: DialogPredefinedTaskBinding
-    protected var taskDataFields: MutableList<ComponentTextInputBinding> = mutableListOf<ComponentTextInputBinding>()
+    protected var taskDataFields: MutableList<ComponentTextInputPaddingBinding> = mutableListOf<ComponentTextInputPaddingBinding>()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogContext = requireContext()
@@ -40,7 +40,8 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
     protected abstract fun populateDialog()
 
     protected fun createDataField(helpResource: Int) {
-        val inputBinding = ComponentTextInputBinding.inflate(layoutInflater)
+        val inputBinding = ComponentTextInputPaddingBinding.inflate(layoutInflater)
+
         inputBinding.inputField.setInputType(InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL)
         inputBinding.inputContainer.hint = dialogContext.getString(R.string.general_value)
         inputBinding.inputContainer.helperText = dialogContext.getString(helpResource)

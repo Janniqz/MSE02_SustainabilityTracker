@@ -33,8 +33,10 @@
                 android:layout_marginTop="8dp"
                 tools:text="Task Template Description" />
 
-            <include layout="@layout/component_text_input"
-                android:id="@+id/input_task_name"/>
+            <include layout="@layout/component_text_input_padding"
+                android:id="@+id/input_task_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/container_required_data"

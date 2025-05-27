@@ -1,4 +1,4 @@
-<com.google.android.material.textfield.TextInputLayout style="@style/TextInputBox"
+<com.google.android.material.textfield.TextInputLayout style="@style/TextInputBox.Padding"
     android:id="@+id/input_container"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
