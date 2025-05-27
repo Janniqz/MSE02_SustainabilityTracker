@@ -36,8 +36,9 @@ class TaskDisplayAdapter(context: Context, tasks: List<TaskWithCompletions>, pri
         if (task.type == TaskType.Predefined) {
             val template = TaskTemplates.getTemplateById(task.templateId!!)!!
             binding.taskDescription.text = template.description
+            binding.taskDescription.visibility = View.VISIBLE
         } else {
-            binding.taskDescription.text = ""
+            binding.taskDescription.visibility = View.GONE
         }
 
         binding.taskSavings.text = context.getString(R.string.task_display_savings, savings, savingsUnit)
