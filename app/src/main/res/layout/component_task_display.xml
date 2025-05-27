@@ -36,7 +36,7 @@
             app:layout_constraintStart_toEndOf="@id/task_category_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:text="Task Name (Savings: Value - Unit)" />
+            tools:text="Task Name" />
 
         <TextView
             android:id="@+id/task_description"
@@ -50,13 +50,38 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="Task Description" />
 
+        <TextView
+            android:id="@+id/task_savings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceCaption"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/task_category_icon"
+            app:layout_constraintTop_toBottomOf="@id/task_description"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Total Savings" />
+
+        <TextView
+            android:id="@+id/task_completions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:textAppearance="?attr/textAppearanceCaption"
+            app:layout_constraintStart_toEndOf="@id/task_category_icon"
+            app:layout_constraintTop_toBottomOf="@id/task_savings"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Completions" />
+
         <LinearLayout
             android:id="@+id/task_actions"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/task_description"
+            app:layout_constraintTop_toBottomOf="@id/task_completions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

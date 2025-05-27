@@ -59,7 +59,7 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
         lifecycleScope.launch {
             db.task().update(taskData)
             setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY_TASK_EDITED to true))
-            Toast.makeText(requireContext(), R.string.task_updated, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.toast_task_updated, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
         }
     }

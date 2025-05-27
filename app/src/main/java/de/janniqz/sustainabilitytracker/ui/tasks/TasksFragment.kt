@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.TaskType
+import de.janniqz.sustainabilitytracker.data.model.TaskWithCompletions
+import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentTasksBinding
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.DeleteTaskDialogFragment
@@ -24,7 +26,7 @@ class TasksFragment : Fragment() {
     private lateinit var taskListAdapter: TaskDisplayAdapter
     private lateinit var database: AppDatabase
 
-    private var currentTasks: MutableList<TaskEntity> = mutableListOf()
+    private var currentTasks: MutableList<TaskWithCompletions> = mutableListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTasksBinding.inflate(inflater, container, false)
@@ -69,9 +71,11 @@ class TasksFragment : Fragment() {
 
     private fun loadTasks() {
         lifecycleScope.launch {
-            val tasksFromDb = database.task().getAll()
+            val tasks = database.task().getAll()
+            val tasksWithCompletions = tasks.map { task -> TaskWithCompletions(task, database.taskCompletion().getCountByTask(task.id)) }
+
             currentTasks.clear()
-            currentTasks.addAll(tasksFromDb)
+            currentTasks.addAll(tasksWithCompletions)
             taskListAdapter.notifyDataSetChanged()
         }
     }

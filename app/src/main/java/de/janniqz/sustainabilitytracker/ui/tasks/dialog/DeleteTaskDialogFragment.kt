@@ -54,7 +54,7 @@ class DeleteTaskDialogFragment: DialogFragment() {
         lifecycleScope.launch {
             db.task().delete(taskData)
             setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY_TASK_DELETED to true))
-            Toast.makeText(requireContext(), R.string.task_deleted, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), R.string.toast_task_deleted, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
         }
     }
