@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
@@ -91,7 +92,16 @@ class TasksFragment : Fragment() {
     }
 
     private fun onCompleteTask(task: TaskEntity) {
-        // TODO
+        val completion = TaskCompletionEntity(
+            taskId = task.id,
+            completionTime = System.currentTimeMillis()
+        )
+
+        lifecycleScope.launch {
+            database.taskCompletion().insert(completion)
+            Toast.makeText(requireContext(), R.string.toast_task_completed, Toast.LENGTH_SHORT).show()
+            loadTasks()
+        }
     }
 
     private fun onDeleteTask(task: TaskEntity) {
