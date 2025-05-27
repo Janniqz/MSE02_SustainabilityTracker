@@ -17,6 +17,7 @@ import de.janniqz.sustainabilitytracker.data.model.TaskWithCompletions
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentTasksBinding
+import de.janniqz.sustainabilitytracker.ui.tasks.dialog.CustomTaskEditDialogFragment
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.DeleteTaskDialogFragment
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogEditFragment
 import kotlinx.coroutines.launch
@@ -55,18 +56,25 @@ class TasksFragment : Fragment() {
     private fun createListeners() {
         // TODO Combine these
 
-        // Add listener for Task Edits
+        // Add listener for Predefined Task Edits
         setFragmentResultListener(PredefinedTaskDialogEditFragment.REQUEST_KEY) { requestKey, bundle ->
             val taskEdited = bundle.getBoolean(PredefinedTaskDialogEditFragment.RESULT_KEY_TASK_EDITED)
             if (taskEdited)
-                loadTasks() // Refresh the list
+                onTaskEdited()
+        }
+
+        // Add listener for Custom Task Edits
+        setFragmentResultListener(CustomTaskEditDialogFragment.REQUEST_KEY) { requestKey, bundle ->
+            val taskEdited = bundle.getBoolean(CustomTaskEditDialogFragment.RESULT_KEY_TASK_EDITED)
+            if (taskEdited)
+                onTaskEdited()
         }
 
         // Add listener for Task Deletions
         setFragmentResultListener(DeleteTaskDialogFragment.REQUEST_KEY) { requestKey, bundle ->
             val taskDeleted = bundle.getBoolean(DeleteTaskDialogFragment.RESULT_KEY_TASK_DELETED)
             if (taskDeleted)
-                loadTasks() // Refresh the list
+                onTaskDeleted()
         }
     }
 
@@ -87,7 +95,9 @@ class TasksFragment : Fragment() {
             dialog.arguments = bundleOf("taskData" to task)
             dialog.show(getParentFragmentManager(), PredefinedTaskDialogEditFragment.TAG)
         } else {
-            // TODO
+            val dialog = CustomTaskEditDialogFragment()
+            dialog.arguments = bundleOf("taskData" to task)
+            dialog.show(getParentFragmentManager(), CustomTaskEditDialogFragment.TAG)
         }
     }
 
@@ -108,6 +118,16 @@ class TasksFragment : Fragment() {
         val dialog = DeleteTaskDialogFragment()
         dialog.arguments = bundleOf("taskData" to task)
         dialog.show(getParentFragmentManager(), DeleteTaskDialogFragment.TAG)
+    }
+
+    private fun onTaskEdited() {
+        Toast.makeText(requireContext(), R.string.toast_task_updated, Toast.LENGTH_SHORT).show()
+        loadTasks()
+    }
+
+    private fun onTaskDeleted() {
+        Toast.makeText(requireContext(), R.string.toast_task_deleted, Toast.LENGTH_SHORT).show()
+        loadTasks()
     }
 
 }

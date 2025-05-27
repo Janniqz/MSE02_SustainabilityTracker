@@ -26,6 +26,9 @@
 
     <string name="task_create_name">Task Name</string>
     <string name="task_create_name_help">Task Variant Name</string>
+    <string name="task_create_saving_type">Saving Type</string>
+    <string name="task_create_savings">Saving Amount</string>
+    <string name="task_create_category_required">A category needs to be specified!</string>
     <string name="task_create">Create Task</string>
     <string name="task_edit">Edit Task</string>
     <string name="task_delete">Delete Task</string>

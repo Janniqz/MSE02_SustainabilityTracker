@@ -4,7 +4,6 @@ import AppDatabase
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -54,7 +53,6 @@ class DeleteTaskDialogFragment: DialogFragment() {
         lifecycleScope.launch {
             db.task().delete(taskData)
             setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY_TASK_DELETED to true))
-            Toast.makeText(requireContext(), R.string.toast_task_deleted, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
         }
     }

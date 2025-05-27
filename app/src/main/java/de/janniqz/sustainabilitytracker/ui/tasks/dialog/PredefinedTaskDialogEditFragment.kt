@@ -1,7 +1,6 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
 import AppDatabase
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
@@ -59,7 +58,6 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
         lifecycleScope.launch {
             db.task().update(taskData)
             setFragmentResult(REQUEST_KEY, bundleOf(RESULT_KEY_TASK_EDITED to true))
-            Toast.makeText(requireContext(), R.string.toast_task_updated, Toast.LENGTH_SHORT).show()
             dialog?.dismiss()
         }
     }

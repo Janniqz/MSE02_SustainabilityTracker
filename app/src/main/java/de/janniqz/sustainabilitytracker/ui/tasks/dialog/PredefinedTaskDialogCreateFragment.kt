@@ -57,7 +57,7 @@ class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
         lifecycleScope.launch {
             db.task().insert(task)
             Toast.makeText(requireContext(), R.string.toast_task_created, Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_returnToTaskOverview)
+            findNavController().navigate(R.id.action_returnToTaskOverview_predefined)
             dialog?.dismiss()
         }
     }

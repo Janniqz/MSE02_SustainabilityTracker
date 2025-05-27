@@ -1,13 +1,14 @@
 package de.janniqz.sustainabilitytracker.ui.tasks
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.databinding.FragmentCreateTaskBinding
+import de.janniqz.sustainabilitytracker.ui.tasks.dialog.CustomTaskDialogFragment
 
 class CreateTaskFragment : Fragment() {
 
@@ -33,7 +34,12 @@ class CreateTaskFragment : Fragment() {
         binding.btnCustom.btnDesc.setText(R.string.task_type_custom_desc)
         binding.btnCustom.btnIcon.setImageResource(R.drawable.ic_task_custom)
         binding.btnCustom.btnRoot.setOnClickListener {
-
+            onCustomTaskClick()
         }
+    }
+
+    private fun onCustomTaskClick() {
+        val dialog = CustomTaskDialogFragment()
+        dialog.show(getParentFragmentManager(), CustomTaskDialogFragment.TAG)
     }
 }
