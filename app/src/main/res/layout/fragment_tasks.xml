@@ -9,7 +9,11 @@
     <ListView
         android:id="@+id/task_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/transparent"
+        android:dividerHeight="12dp"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_new_task"
