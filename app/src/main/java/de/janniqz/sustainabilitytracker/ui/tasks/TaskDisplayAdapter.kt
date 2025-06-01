@@ -24,11 +24,11 @@ class TaskDisplayAdapter(context: Context, tasks: List<TaskWithCompletions>, pri
 
         val taskData = getItem(position)!!
         val task = taskData.task
-        val icon = getTaskIcon(task.category)
+        val icon = TaskCategory.getTaskIcon(task.category)
 
         val completions = taskData.completions
         val savings = task.savings * completions
-        val savingsUnit = context.getString(getSavingsUnit(task.category))
+        val savingsUnit = context.getString(TaskCategory.getSavingsUnit(task.category))
 
         binding.taskName.text = task.name
         binding.taskCategoryIcon.setImageResource(icon)
@@ -49,21 +49,5 @@ class TaskDisplayAdapter(context: Context, tasks: List<TaskWithCompletions>, pri
         binding.buttonDelete.setOnClickListener { taskDeleteFunc(task) }
 
         return binding.root
-    }
-
-    private fun getTaskIcon(category: TaskCategory): Int {
-        return when (category) {
-            TaskCategory.CO2 -> R.drawable.ic_category_co2
-            TaskCategory.Water -> R.drawable.ic_category_water
-            TaskCategory.Waste -> R.drawable.ic_category_waste
-        }
-    }
-
-    private fun getSavingsUnit(category: TaskCategory): Int {
-        return when (category) {
-            TaskCategory.CO2 -> R.string.task_category_co2_unit
-            TaskCategory.Water -> R.string.task_category_water_unit
-            TaskCategory.Waste -> R.string.task_category_waste_unit
-        }
     }
 }
