@@ -37,6 +37,10 @@
     <string name="task_display_savings">Total Saved: %1$.1f %2$s</string>
     <string name="task_display_completions">Completions: %1$d</string>
 
+    <string name="statistics_savings">%1$.1f %2$s</string>
+    <string name="statistics_display_task_name_label">Task:</string>
+    <string name="statistics_display_savings">Saved %1$.1f %2$s</string>
+
     <string name="toast_task_created">Task created!</string>
     <string name="toast_task_updated">Task updated!</string>
     <string name="toast_task_deleted">Task deleted!</string>
@@ -46,4 +50,9 @@
     <string name="general_value">Value</string>
     <string name="general_required">Value required!</string>
     <string name="general_invalid_number">Invalid value!</string>
+    <string name="general_year">Year</string>
+    <string name="general_month">Month</string>
+    <string name="general_week">Week</string>
+    <string name="general_previous_period">Previous Period</string>
+    <string name="general_next_period">Next Period</string>
 </resources>
