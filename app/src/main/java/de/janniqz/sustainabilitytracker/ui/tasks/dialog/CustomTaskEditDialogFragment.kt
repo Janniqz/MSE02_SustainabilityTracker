@@ -43,9 +43,16 @@ class CustomTaskEditDialogFragment: CustomTaskDialogFragment() {
             return
 
         val taskData = task!!
+        var selectedCategory: TaskCategory? = null
+        when {
+            binding.inputTaskCategory.btnCo2.isChecked -> selectedCategory = TaskCategory.CO2
+            binding.inputTaskCategory.btnWater.isChecked -> selectedCategory = TaskCategory.Water
+            binding.inputTaskCategory.btnWaste.isChecked -> selectedCategory = TaskCategory.Waste
+        }
 
         taskData.name = binding.inputTaskName.inputField.text.toString()
         taskData.savings = binding.inputTaskSaving.inputField.text.toString().toFloat()
+        taskData.category = selectedCategory!!
 
         val db = AppDatabase.getInstance(requireContext())
         lifecycleScope.launch {

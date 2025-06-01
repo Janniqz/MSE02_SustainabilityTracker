@@ -14,7 +14,7 @@ data class TaskEntity(
     val id: Int = 0,
     val type: TaskType,
     var name: String,
-    val category: TaskCategory,
+    var category: TaskCategory,
     var savings: Float,
     val createdAt: Long,
 
