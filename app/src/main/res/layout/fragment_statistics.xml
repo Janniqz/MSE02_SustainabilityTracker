@@ -83,6 +83,11 @@
             tools:text="40kg CO₂"
             tools:drawableStart="@drawable/ic_category_co2" />
 
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/savings_chart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp" />
+
         <include
             android:id="@+id/stats_category_selection"
             layout="@layout/component_task_category_selection"

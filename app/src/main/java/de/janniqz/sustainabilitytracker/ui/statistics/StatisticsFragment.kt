@@ -1,6 +1,7 @@
 package de.janniqz.sustainabilitytracker.ui.statistics
 
 import AppDatabase
+import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -9,6 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.android.material.tabs.TabLayout
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.StatisticsCompletion
@@ -34,6 +41,7 @@ class StatisticsFragment : Fragment() {
     private val shortDateFormat = SimpleDateFormat("MMM d", Locale.getDefault())
     private val monthYearFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     private val yearFormat = SimpleDateFormat("yyyy", Locale.getDefault())
+    private val dayOfMonthFormat = SimpleDateFormat("d", Locale.getDefault())
 
     private var currentCompletions: MutableList<StatisticsCompletion> = mutableListOf()
 
@@ -48,6 +56,7 @@ class StatisticsFragment : Fragment() {
 
         setupTimePeriodActions()
         setupCategoryActions()
+        setupChart()
 
         completionListAdapter = StatisticsCompletionDisplayAdapter(requireContext(), currentCompletions)
         binding.completionList.adapter = completionListAdapter
@@ -99,41 +108,42 @@ class StatisticsFragment : Fragment() {
             TimePeriod.MONTH -> currentFocusDate.add(Calendar.MONTH, direction)
             TimePeriod.YEAR -> currentFocusDate.add(Calendar.YEAR, direction)
         }
+
         calculateCurrentPeriodDates()
         updatePeriodText()
         updateCompletions()
     }
 
     private fun calculateCurrentPeriodDates() {
-        val calendar = currentFocusDate.clone() as Calendar
-
-        // Reset Calendar fields to start of day
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
+        val calendar = setCalendarToBeginningOfDay(currentFocusDate.clone() as Calendar)
 
         when (selectedTimePeriod) {
             TimePeriod.WEEK -> {
+                // Start of first day of week
                 calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
                 startDate = calendar.timeInMillis
 
+                // End of last day of week
                 calendar.add(Calendar.WEEK_OF_YEAR, 1)
-                calendar.add(Calendar.MILLISECOND, -1) // End of the last day of the week
+                calendar.add(Calendar.MILLISECOND, -1)
                 endDate = calendar.timeInMillis
             }
             TimePeriod.MONTH -> {
+                // Start of first day of month
                 calendar.set(Calendar.DAY_OF_MONTH, 1)
                 startDate = calendar.timeInMillis
 
+                // End of last day of month
                 calendar.add(Calendar.MONTH, 1)
-                calendar.add(Calendar.MILLISECOND, -1) // End of the last day of the month
+                calendar.add(Calendar.MILLISECOND, -1)
                 endDate = calendar.timeInMillis
             }
             TimePeriod.YEAR -> {
+                // Start of first day of year
                 calendar.set(Calendar.DAY_OF_YEAR, 1)
                 startDate = calendar.timeInMillis
 
+                // End of last day of year
                 calendar.add(Calendar.YEAR, 1)
                 calendar.add(Calendar.MILLISECOND, -1) // End of the last day of the year
                 endDate = calendar.timeInMillis
@@ -177,6 +187,174 @@ class StatisticsFragment : Fragment() {
 
     // endregion
 
+    // region Bar Chart Handling
+
+    private fun setupChart() {
+        binding.savingsChart.apply {
+            description.isEnabled = false
+            isDoubleTapToZoomEnabled = false
+
+            setDrawGridBackground(false)
+            setDrawBarShadow(false)
+            setPinchZoom(false)
+            setScaleEnabled(false)
+            setTouchEnabled(false)
+
+            xAxis.position = XAxis.XAxisPosition.BOTTOM
+            xAxis.textColor = Color.WHITE
+            xAxis.granularity = 1f
+            xAxis.isGranularityEnabled = true
+            xAxis.setDrawGridLines(false)
+
+            axisRight.isEnabled = true
+            axisRight.axisMinimum = 0f
+            axisRight.textColor = Color.WHITE
+            axisRight.setDrawGridLines(true)
+
+            axisLeft.isEnabled = false
+            legend.isEnabled = false
+        }
+    }
+
+    private fun updateChart() {
+        val barEntries = ArrayList<BarEntry>()
+        val axisLabels = ArrayList<String>()
+
+        when (selectedTimePeriod) {
+            TimePeriod.WEEK -> getWeeklyChartEntries(barEntries, axisLabels)
+            TimePeriod.MONTH -> getMonthlyChartEntries(barEntries, axisLabels)
+            TimePeriod.YEAR -> getYearlyChartEntries(barEntries, axisLabels)
+        }
+
+        val barDataSet = BarDataSet(barEntries, "Savings")
+        barDataSet.color = Color.WHITE
+        barDataSet.valueTextColor = Color.WHITE
+        barDataSet.valueTextSize = 10f
+        barDataSet.axisDependency = YAxis.AxisDependency.RIGHT
+        barDataSet.setDrawValues(false)  // Don't draw values on top of bars
+
+        val barData = BarData(barDataSet)
+        barData.barWidth = when(selectedTimePeriod) {
+            TimePeriod.WEEK -> 0.6f
+            TimePeriod.MONTH -> 0.8f
+            TimePeriod.YEAR -> 0.5f
+        }
+
+        binding.savingsChart.data = barData
+        binding.savingsChart.xAxis.valueFormatter = IndexAxisValueFormatter(axisLabels)
+        binding.savingsChart.xAxis.labelCount = axisLabels.size
+
+        var yMax = barEntries.maxOfOrNull { it.y } ?: 0f
+        if (yMax > 1f)
+            yMax = yMax * 1.1f  // Add 10% padding to the max value
+        else
+            yMax = 1.0f // Default max to 1.0 if no / small values
+
+        binding.savingsChart.axisRight.axisMaximum = yMax
+        binding.savingsChart.invalidate() // Refresh the chart
+    }
+
+    private fun getWeeklyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = startDate
+
+        // Loop through all days of the week
+        for (i in 0 until 7) {
+            val dayStart = calendar.timeInMillis
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            val dayEnd = calendar.timeInMillis - 1
+
+            val savingsForDay = getTotalSavingsBetween(dayStart, dayEnd)
+            barEntries.add(BarEntry(i.toFloat(), savingsForDay))
+
+            // Day in month
+            val dayLabelCalendar = Calendar.getInstance().apply { timeInMillis = dayStart }
+            labels.add(dayOfMonthFormat.format(dayLabelCalendar.time))
+        }
+    }
+
+    private fun getMonthlyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
+        val monthCalendar = Calendar.getInstance().apply { timeInMillis = startDate }
+        val daysInMonth = monthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        // Loop through all days of the month
+        for (i in 0 until daysInMonth) {
+            val currentDayCal = Calendar.getInstance().apply {
+                timeInMillis = startDate
+                add(Calendar.DAY_OF_MONTH, i)
+            }
+            setCalendarToBeginningOfDay(currentDayCal)
+
+            val dayStart = currentDayCal.timeInMillis
+            currentDayCal.add(Calendar.DAY_OF_MONTH, 1)
+            val dayEnd = currentDayCal.timeInMillis - 1
+
+            val savingsForDay = getTotalSavingsBetween(dayStart, dayEnd)
+            barEntries.add(BarEntry(i.toFloat(), savingsForDay))
+
+            // Only show every other day to not clutter the x-axis
+            // Shows the first day, every 5th following day, and the last day of the month
+            val dayOfMonth = i + 1
+            if (dayOfMonth == 1 || dayOfMonth % 5 == 1 || dayOfMonth == daysInMonth) {
+                labels.add(dayOfMonth.toString())
+            } else {
+                labels.add("") // Empty label for other days
+            }
+        }
+    }
+
+    private fun getYearlyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
+        // Loop through all months of the year
+        for (i in 0 until 12) {
+            val monthStartCal = Calendar.getInstance().apply {
+                timeInMillis = startDate
+                add(Calendar.MONTH, i)
+                set(Calendar.DAY_OF_MONTH, 1)
+            }
+            setCalendarToBeginningOfDay(monthStartCal)
+
+            val monthStart = monthStartCal.timeInMillis
+            val monthEndCal = monthStartCal.clone() as Calendar
+            monthEndCal.add(Calendar.MONTH, 1)
+            monthEndCal.add(Calendar.MILLISECOND, -1)
+            val monthEnd = monthEndCal.timeInMillis
+
+            val savingsForMonth = getTotalSavingsBetween(monthStart, monthEnd)
+            barEntries.add(BarEntry(i.toFloat(), savingsForMonth))
+
+            // Show every odd month
+            val monthNumber = i + 1
+            if (monthNumber % 2 != 0) {
+                labels.add(monthNumber.toString())
+            } else {
+                labels.add("")
+            }
+        }
+    }
+
+    private fun getTotalSavingsBetween(timeStart: Long, timeEnd: Long): Float {
+        var totalSavings = 0f
+        for (task in currentCompletions.filter { it.completion.completionTime in timeStart..timeEnd }) {
+            totalSavings += task.task.savings
+        }
+
+        return totalSavings
+    }
+
+    // endregion
+
+    // region Helpers
+
+    private fun setCalendarToBeginningOfDay(calendar: Calendar): Calendar {
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        return calendar
+    }
+
+    // endregion
+
     private fun updateCompletions() {
         lifecycleScope.launch {
             val completions = mutableListOf<StatisticsCompletion>()
@@ -196,6 +374,7 @@ class StatisticsFragment : Fragment() {
             completionListAdapter.notifyDataSetChanged()
 
             updateSavingsText(totalSavings)
+            updateChart()
         }
     }
 
