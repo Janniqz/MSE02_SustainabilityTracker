@@ -36,7 +36,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
+        app:navGraph="@navigation/nav_graph_main"
         tools:ignore="FragmentTagUsage" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

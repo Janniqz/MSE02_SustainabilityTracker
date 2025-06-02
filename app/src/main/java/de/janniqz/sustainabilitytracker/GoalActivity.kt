@@ -3,6 +3,7 @@ package de.janniqz.sustainabilitytracker
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import de.janniqz.sustainabilitytracker.databinding.ActivityGoalBinding
 
@@ -16,6 +17,12 @@ class GoalActivity : AppCompatActivity() {
         binding = ActivityGoalBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
+        setupNavigation()
+    }
+
+    private fun setupNavigation() {
+        val navController = findNavController(R.id.nav_host_fragment)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

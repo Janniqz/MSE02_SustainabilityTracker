@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_goal"
+    app:startDestination="@id/goalsFragment2">
+    <fragment
+        android:id="@+id/goalsFragment2"
+        android:name="de.janniqz.sustainabilitytracker.ui.goals.GoalsFragment"
+        android:label="fragment_goals"
+        tools:layout="@layout/fragment_goals" />
+</navigation>
