@@ -14,9 +14,9 @@
         android:theme="@style/Theme.MSE02_SustainabilityTracker"
         tools:targetApi="31">
         <activity
-            android:name=".GoalSettingActivity"
+            android:name=".GoalActivity"
             android:exported="false"
-            android:label="Set Goals"
+            android:label="Goals"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"

@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_set_goals -> {
-                startActivity(Intent(this, GoalSettingActivity::class.java))
+                startActivity(Intent(this, GoalActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
