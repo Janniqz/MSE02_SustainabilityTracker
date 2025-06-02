@@ -36,9 +36,9 @@ class DeleteTaskDialogFragment: DialogFragment() {
         binding.confirmationName.text = getString(R.string.task_delete)
         binding.confirmationDesc.text = getString(R.string.task_delete_desc)
 
-        binding.buttonConfirm.text = getString(R.string.task_delete)
-        binding.buttonConfirm.setOnClickListener { deleteTask() }
-        binding.buttonCancel.setOnClickListener { dialog?.dismiss() }
+        binding.btnConfirm.text = getString(R.string.task_delete)
+        binding.btnConfirm.setOnClickListener { deleteTask() }
+        binding.btnCancel.setOnClickListener { dialog?.dismiss() }
 
         val builder = AlertDialog.Builder(dialogContext).setView(binding.root)
         val dialog = builder.create()

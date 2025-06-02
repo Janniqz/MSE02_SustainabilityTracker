@@ -46,14 +46,14 @@
 
                 <Button
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:id="@+id/button_cancel"
+                    android:id="@+id/btn_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/general_cancel" />
 
                 <Button
                     style="@style/Widget.Material3.Button.TextButton"
-                    android:id="@+id/button_confirm"
+                    android:id="@+id/btn_confirm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     tools:text="Confirmation Button" />

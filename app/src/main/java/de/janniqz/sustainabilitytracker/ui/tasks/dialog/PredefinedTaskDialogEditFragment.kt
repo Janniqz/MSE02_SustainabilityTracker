@@ -31,8 +31,8 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
 
             binding.inputTaskName.inputField.setText(taskData.name)
 
-            binding.buttonCreate.setText(R.string.task_edit)
-            binding.buttonCreate.setOnClickListener { editTask() }
+            binding.btnCreate.setText(R.string.task_edit)
+            binding.btnCreate.setOnClickListener { editTask() }
 
             template.requiredData?.let { field -> createDataField(field) }
         }

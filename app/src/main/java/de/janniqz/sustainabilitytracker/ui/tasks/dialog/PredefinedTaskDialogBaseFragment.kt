@@ -34,7 +34,7 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
         binding.inputTaskName.inputContainer.hint = dialogContext.getString(R.string.task_create_name)
         binding.inputTaskName.inputContainer.helperText = dialogContext.getString(R.string.task_create_name_help)
 
-        binding.buttonCancel.setOnClickListener { dialog?.dismiss() }
+        binding.btnCancel.setOnClickListener { dialog?.dismiss() }
     }
 
     protected abstract fun populateDialog()

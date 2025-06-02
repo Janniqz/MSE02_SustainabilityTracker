@@ -24,8 +24,8 @@ class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
             binding.taskTemplateName.text = template.name
             binding.taskTemplateDescription.text = template.description
 
-            binding.buttonCreate.setText(R.string.task_create)
-            binding.buttonCreate.setOnClickListener { createTask() }
+            binding.btnCreate.setText(R.string.task_create)
+            binding.btnCreate.setOnClickListener { createTask() }
 
             template.requiredData?.let { field -> createDataField(field) }
         }

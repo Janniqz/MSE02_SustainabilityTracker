@@ -84,7 +84,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_edit"
+                android:id="@+id/btn_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -96,7 +96,7 @@
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_complete"
+                android:id="@+id/btn_complete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -110,7 +110,7 @@
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_delete"
+                android:id="@+id/btn_delete"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

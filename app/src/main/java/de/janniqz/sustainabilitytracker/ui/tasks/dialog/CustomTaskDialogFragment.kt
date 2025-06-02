@@ -47,8 +47,8 @@ open class CustomTaskDialogFragment: DialogFragment() {
         binding.inputTaskSaving.inputContainer.hint = dialogContext.getString(R.string.general_value)
         binding.inputTaskSaving.inputContainer.helperText = dialogContext.getString(R.string.task_create_savings)
 
-        binding.buttonCreate.setOnClickListener { onCreateClick() }
-        binding.buttonCancel.setOnClickListener { dialog?.dismiss() }
+        binding.btnCreate.setOnClickListener { onCreateClick() }
+        binding.btnCancel.setOnClickListener { dialog?.dismiss() }
     }
 
     protected open fun onCreateClick() {

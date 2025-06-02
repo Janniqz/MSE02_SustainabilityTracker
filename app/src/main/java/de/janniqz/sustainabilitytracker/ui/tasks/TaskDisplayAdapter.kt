@@ -44,9 +44,9 @@ class TaskDisplayAdapter(context: Context, tasks: List<TaskWithCompletions>, pri
         binding.taskSavings.text = context.getString(R.string.task_display_savings, savings, savingsUnit)
         binding.taskCompletions.text = context.getString(R.string.task_display_completions, completions)
 
-        binding.buttonEdit.setOnClickListener { taskEditFunc(task) }
-        binding.buttonComplete.setOnClickListener { taskCompleteFunc(task) }
-        binding.buttonDelete.setOnClickListener { taskDeleteFunc(task) }
+        binding.btnEdit.setOnClickListener { taskEditFunc(task) }
+        binding.btnComplete.setOnClickListener { taskCompleteFunc(task) }
+        binding.btnDelete.setOnClickListener { taskDeleteFunc(task) }
 
         return binding.root
     }
