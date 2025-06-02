@@ -192,7 +192,7 @@ class StatisticsFragment : Fragment() {
             }
 
             currentCompletions.clear()
-            currentCompletions.addAll(completions)
+            currentCompletions.addAll(completions.sortedByDescending { it.completion.completionTime })
             completionListAdapter.notifyDataSetChanged()
 
             updateSavingsText(totalSavings)
