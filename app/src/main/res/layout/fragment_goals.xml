@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.tasks.TasksFragment">
+    tools:context=".ui.goals.GoalsFragment">
 
     <ListView
-        android:id="@+id/task_list"
+        android:id="@+id/goal_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@color/transparent"
@@ -16,12 +16,12 @@
         android:clipToPadding="false"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_new_task"
+        android:id="@+id/fab_new_goal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:text="@string/fab_new_task_label"
+        android:text="@string/fab_new_goal_label"
         app:icon="@drawable/ic_new" />
 
 </FrameLayout>

@@ -7,6 +7,7 @@
     <string name="fragment_create_predefined_task_label">Create Predefined Task</string>
 
     <string name="fab_new_task_label">New Task</string>
+    <string name="fab_new_goal_label">New Goal</string>
 
     <string name="task_type_predefined_title">Predefined Task</string>
     <string name="task_type_predefined_desc">Choose from a predefined selection of tasks with set metrics and categories.</string>
@@ -41,10 +42,18 @@
     <string name="statistics_display_task_name_label">Task:</string>
     <string name="statistics_display_savings">Saved %1$.1f %2$s</string>
 
+    <string name="goal_delete">Delete Goal</string>
+    <string name="goal_edit">Edit Goal</string>
+    <string name="goal_progress">Achieved: %1$.1f / %2$.1f %3$s</string>
+    <string name="goal_target">Target: %1$.1f %2$s / %3$s</string>
+
     <string name="toast_task_created">Task created!</string>
     <string name="toast_task_updated">Task updated!</string>
     <string name="toast_task_deleted">Task deleted!</string>
     <string name="toast_task_completed">Task completed!</string>
+    <string name="toast_goal_created">Goal created!</string>
+    <string name="toast_goal_updated">Goal updated!</string>
+    <string name="toast_goal_deleted">Goal deleted!</string>
 
     <string name="general_cancel">Cancel</string>
     <string name="general_value">Value</string>
