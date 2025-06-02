@@ -23,6 +23,7 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 import de.janniqz.sustainabilitytracker.databinding.FragmentStatisticsBinding
 import de.janniqz.sustainabilitytracker.tools.DateHelper
+import de.janniqz.sustainabilitytracker.tools.DateHelper.Companion.setToBeginningOfDay
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -252,8 +253,7 @@ class StatisticsFragment : Fragment() {
             val currentDayCal = Calendar.getInstance().apply {
                 timeInMillis = startDate
                 add(Calendar.DAY_OF_MONTH, i)
-            }
-            DateHelper.setCalendarToBeginningOfDay(currentDayCal)
+            }.setToBeginningOfDay()
 
             val dayStart = currentDayCal.timeInMillis
             currentDayCal.add(Calendar.DAY_OF_MONTH, 1)
@@ -280,8 +280,7 @@ class StatisticsFragment : Fragment() {
                 timeInMillis = startDate
                 add(Calendar.MONTH, i)
                 set(Calendar.DAY_OF_MONTH, 1)
-            }
-            DateHelper.setCalendarToBeginningOfDay(monthStartCal)
+            }.setToBeginningOfDay()
 
             val monthStart = monthStartCal.timeInMillis
             val monthEndCal = monthStartCal.clone() as Calendar
