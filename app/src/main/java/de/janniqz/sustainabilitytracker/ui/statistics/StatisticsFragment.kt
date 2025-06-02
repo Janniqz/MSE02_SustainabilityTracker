@@ -334,8 +334,8 @@ class StatisticsFragment : Fragment() {
 
     private fun getTotalSavingsBetween(timeStart: Long, timeEnd: Long): Float {
         var totalSavings = 0f
-        for (task in currentCompletions.filter { it.completion.completionTime in timeStart..timeEnd }) {
-            totalSavings += task.task.savings
+        for (completion in currentCompletions.filter { it.completion.completionTime in timeStart..timeEnd }) {
+            totalSavings += completion.task.savings
         }
 
         return totalSavings
