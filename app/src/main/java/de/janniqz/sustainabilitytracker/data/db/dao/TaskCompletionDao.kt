@@ -18,6 +18,9 @@ interface TaskCompletionDao {
     @Query("SELECT COUNT(*) FROM task_completions WHERE taskId = :taskId")
     suspend fun getCountByTask(taskId: Int): Int
 
+    @Query("SELECT COUNT(*) FROM task_completions WHERE taskId = :taskId AND completionTime <= :toDate AND completionTime >= :fromDate")
+    suspend fun getCountByTaskBetweenDates(taskId: Int, fromDate: Long, toDate: Long): Int
+
     @Insert
     suspend fun insert(taskCompletion: TaskCompletionEntity)
 

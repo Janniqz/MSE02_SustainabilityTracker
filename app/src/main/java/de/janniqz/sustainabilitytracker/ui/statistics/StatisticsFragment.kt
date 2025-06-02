@@ -22,6 +22,7 @@ import de.janniqz.sustainabilitytracker.data.model.StatisticsCompletion
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 import de.janniqz.sustainabilitytracker.databinding.FragmentStatisticsBinding
+import de.janniqz.sustainabilitytracker.tools.DateHelper
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -115,40 +116,9 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun calculateCurrentPeriodDates() {
-        val calendar = setCalendarToBeginningOfDay(currentFocusDate.clone() as Calendar)
-
-        when (selectedTimePeriod) {
-            TimePeriod.WEEK -> {
-                // Start of first day of week
-                calendar.set(Calendar.DAY_OF_WEEK, calendar.firstDayOfWeek)
-                startDate = calendar.timeInMillis
-
-                // End of last day of week
-                calendar.add(Calendar.WEEK_OF_YEAR, 1)
-                calendar.add(Calendar.MILLISECOND, -1)
-                endDate = calendar.timeInMillis
-            }
-            TimePeriod.MONTH -> {
-                // Start of first day of month
-                calendar.set(Calendar.DAY_OF_MONTH, 1)
-                startDate = calendar.timeInMillis
-
-                // End of last day of month
-                calendar.add(Calendar.MONTH, 1)
-                calendar.add(Calendar.MILLISECOND, -1)
-                endDate = calendar.timeInMillis
-            }
-            TimePeriod.YEAR -> {
-                // Start of first day of year
-                calendar.set(Calendar.DAY_OF_YEAR, 1)
-                startDate = calendar.timeInMillis
-
-                // End of last day of year
-                calendar.add(Calendar.YEAR, 1)
-                calendar.add(Calendar.MILLISECOND, -1) // End of the last day of the year
-                endDate = calendar.timeInMillis
-            }
-        }
+        val period = DateHelper.getCurrentPeriodicityRange(selectedTimePeriod, currentFocusDate)
+        startDate = period.first
+        endDate = period.second
     }
 
     private fun updatePeriodText() {
@@ -283,7 +253,7 @@ class StatisticsFragment : Fragment() {
                 timeInMillis = startDate
                 add(Calendar.DAY_OF_MONTH, i)
             }
-            setCalendarToBeginningOfDay(currentDayCal)
+            DateHelper.setCalendarToBeginningOfDay(currentDayCal)
 
             val dayStart = currentDayCal.timeInMillis
             currentDayCal.add(Calendar.DAY_OF_MONTH, 1)
@@ -311,7 +281,7 @@ class StatisticsFragment : Fragment() {
                 add(Calendar.MONTH, i)
                 set(Calendar.DAY_OF_MONTH, 1)
             }
-            setCalendarToBeginningOfDay(monthStartCal)
+            DateHelper.setCalendarToBeginningOfDay(monthStartCal)
 
             val monthStart = monthStartCal.timeInMillis
             val monthEndCal = monthStartCal.clone() as Calendar
@@ -339,18 +309,6 @@ class StatisticsFragment : Fragment() {
         }
 
         return totalSavings
-    }
-
-    // endregion
-
-    // region Helpers
-
-    private fun setCalendarToBeginningOfDay(calendar: Calendar): Calendar {
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-        return calendar
     }
 
     // endregion

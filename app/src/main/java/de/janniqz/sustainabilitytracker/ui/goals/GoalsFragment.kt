@@ -1,16 +1,20 @@
 package de.janniqz.sustainabilitytracker.ui.goals
 
 import AppDatabase
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.GoalWithProgress
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentGoalsBinding
+import de.janniqz.sustainabilitytracker.tools.DateHelper
+import kotlinx.coroutines.launch
 
 class GoalsFragment : Fragment() {
 
@@ -51,7 +55,29 @@ class GoalsFragment : Fragment() {
     }
 
     private fun loadGoals() {
-        // TODO
+        lifecycleScope.launch {
+            val goals = database.goal().getAll()
+            val goalsWithProgress = mutableListOf<GoalWithProgress>()
+
+            for (goal in goals) {
+                val (currentPeriodStart, currentPeriodEnd) = DateHelper.getCurrentPeriodicityRange(goal.periodicity, Calendar.getInstance())
+                var progress = 0f
+
+                // Get all tasks that match the goal's category
+                val relevantTasks = database.task().getAllByCategory(goal.category)
+                for (task in relevantTasks) {
+                    // Get completions for this task within the goal's current period
+                    val completionsInPeriod = database.taskCompletion().getCountByTaskBetweenDates(task.id, currentPeriodStart, currentPeriodEnd)
+                    progress += completionsInPeriod * task.savings
+                }
+
+                goalsWithProgress.add(GoalWithProgress(goal, progress))
+            }
+
+            currentGoals.clear()
+            currentGoals.addAll(goalsWithProgress)
+            goalListAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun onCreateGoal() {
