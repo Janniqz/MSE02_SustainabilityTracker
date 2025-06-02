@@ -9,10 +9,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.MSE02_SustainabilityTracker"
-        android:screenOrientation="portrait"
         tools:targetApi="31">
+        <activity
+            android:name=".GoalSettingActivity"
+            android:exported="false"
+            android:label="Set Goals"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
