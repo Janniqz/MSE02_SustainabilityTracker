@@ -6,22 +6,26 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import de.janniqz.sustainabilitytracker.data.db.converter.TaskCategoryConverter
 import de.janniqz.sustainabilitytracker.data.db.converter.TaskTypeConverter
+import de.janniqz.sustainabilitytracker.data.db.converter.TimePeriodConverter
+import de.janniqz.sustainabilitytracker.data.db.dao.GoalDao
 import de.janniqz.sustainabilitytracker.data.db.dao.TaskCompletionDao
 import de.janniqz.sustainabilitytracker.data.db.dao.TaskDao
+import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 
 @Database(
-    entities = [TaskEntity::class, TaskCompletionEntity::class],
-    version = 2,
+    entities = [TaskEntity::class, TaskCompletionEntity::class, GoalEntity::class],
+    version = 3,
     exportSchema = false
 )
-@TypeConverters(TaskCategoryConverter::class, TaskTypeConverter::class)
+@TypeConverters(TaskCategoryConverter::class, TaskTypeConverter::class, TimePeriodConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     // DAOs
     abstract fun task(): TaskDao
     abstract fun taskCompletion(): TaskCompletionDao
+    abstract fun goal(): GoalDao
 
     // Singleton
     companion object {
