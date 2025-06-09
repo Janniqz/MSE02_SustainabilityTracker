@@ -7,13 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.GoalWithProgress
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentGoalsBinding
 import de.janniqz.sustainabilitytracker.tools.DateHelper
+import de.janniqz.sustainabilitytracker.ui.goals.dialog.CreateGoalDialogFragment
+import de.janniqz.sustainabilitytracker.ui.goals.dialog.DeleteGoalDialogFragment
 import kotlinx.coroutines.launch
 
 class GoalsFragment : Fragment() {
@@ -51,7 +55,19 @@ class GoalsFragment : Fragment() {
     }
 
     private fun createListeners() {
-        // TODO
+        // Add listener for Goal Creations
+        setFragmentResultListener(CreateGoalDialogFragment.REQUEST_KEY) { requestKey, bundle ->
+            val goalCreated = bundle.getBoolean(CreateGoalDialogFragment.RESULT_KEY_GOAL_CREATED)
+            if (goalCreated)
+                onGoalCreated()
+        }
+
+        // Add listener for Goal Deletions
+        setFragmentResultListener(DeleteGoalDialogFragment.REQUEST_KEY) { requestKey, bundle ->
+            val goalDeleted = bundle.getBoolean(DeleteGoalDialogFragment.RESULT_KEY_GOAL_DELETED)
+            if (goalDeleted)
+                onGoalDeleted()
+        }
     }
 
     private fun loadGoals() {
@@ -81,7 +97,8 @@ class GoalsFragment : Fragment() {
     }
 
     private fun onCreateGoal() {
-        // TODO
+        val dialog = CreateGoalDialogFragment()
+        dialog.show(getParentFragmentManager(), CreateGoalDialogFragment.TAG)
     }
 
     private fun onEditGoal(goal: GoalEntity) {
@@ -89,7 +106,9 @@ class GoalsFragment : Fragment() {
     }
 
     private fun onDeleteGoal(goal: GoalEntity) {
-        // TODO
+        val dialog = DeleteGoalDialogFragment()
+        dialog.arguments = bundleOf("goalData" to goal)
+        dialog.show(getParentFragmentManager(), DeleteGoalDialogFragment.TAG)
     }
 
     private fun onGoalCreated() {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="TaskCategorySelection">
+    <style name="ButtonSelection">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">horizontal</item>
@@ -10,14 +10,14 @@
         <item name="singleSelection">true</item>
     </style>
 
-    <style name="TaskCategoryButton" parent="Widget.Material3.Button.OutlinedButton">
+    <style name="SelectionButton" parent="Widget.Material3.Button.OutlinedButton">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="iconPadding">0dp</item>
     </style>
 
-    <style name="TaskCategoryButton.Compact" parent="TaskCategoryButton">
+    <style name="SelectionButton.Compact" parent="SelectionButton">
         <item name="iconGravity">textStart</item>
     </style>
 

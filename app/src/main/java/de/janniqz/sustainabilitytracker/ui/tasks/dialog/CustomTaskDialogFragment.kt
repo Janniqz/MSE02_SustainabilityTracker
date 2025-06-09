@@ -97,7 +97,7 @@ open class CustomTaskDialogFragment: DialogFragment() {
             binding.inputTaskCategory.btnWaste.isChecked -> taskCategory = TaskCategory.Waste
         }
         if (taskCategory == null) {
-            Toast.makeText(dialogContext, R.string.task_create_category_required, Toast.LENGTH_SHORT).show()
+            Toast.makeText(dialogContext, R.string.general_category_required, Toast.LENGTH_SHORT).show()
             isValid = false
         }
 

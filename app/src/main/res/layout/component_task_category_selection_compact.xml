@@ -1,21 +1,20 @@
 <com.google.android.material.button.MaterialButtonToggleGroup xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/category_toggle_group"
-    style="@style/TaskCategorySelection">
+    style="@style/ButtonSelection">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_co2"
-        style="@style/TaskCategoryButton.Compact"
+        style="@style/SelectionButton.Compact"
         app:icon="@drawable/ic_category_co2" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_water"
-        style="@style/TaskCategoryButton.Compact"
+        style="@style/SelectionButton.Compact"
         app:icon="@drawable/ic_category_water" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_waste"
-        style="@style/TaskCategoryButton.Compact"
+        style="@style/SelectionButton.Compact"
         app:icon="@drawable/ic_category_waste" />
 
 </com.google.android.material.button.MaterialButtonToggleGroup>

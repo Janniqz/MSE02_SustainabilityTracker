@@ -1,6 +1,8 @@
 <com.google.android.material.textfield.TextInputLayout style="@style/TextInputBox"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/input_container"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:hint="Hint Text">
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/input_field"

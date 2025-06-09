@@ -1,0 +1,19 @@
+<com.google.android.material.button.MaterialButtonToggleGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/ButtonSelection">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_week"
+        android:text="@string/general_week"
+        style="@style/SelectionButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_month"
+        android:text="@string/general_month"
+        style="@style/SelectionButton"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_year"
+        android:text="@string/general_year"
+        style="@style/SelectionButton"/>
+
+</com.google.android.material.button.MaterialButtonToggleGroup>
