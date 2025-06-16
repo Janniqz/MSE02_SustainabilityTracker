@@ -12,6 +12,9 @@ import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
 @Dao
 interface TaskCompletionDao {
 
+    @Query("SELECT * FROM task_completions WHERE taskId = :taskId")
+    suspend fun getAllByTask(taskId: Int): List<TaskCompletionEntity>
+
     /**
      * Retrieves Task Completions for the specified taskId in the given Time Range
      * @param taskId Database ID of a TaskEntity
