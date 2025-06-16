@@ -1,4 +1,4 @@
-
+package de.janniqz.sustainabilitytracker.data.db
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -14,6 +14,10 @@ import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 
+/**
+ * Provides Database Access for the Application
+ * @see RoomDatabase
+ */
 @Database(
     entities = [TaskEntity::class, TaskCompletionEntity::class, GoalEntity::class],
     version = 3,
@@ -32,6 +36,9 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        /**
+         * Provides access to a Singleton Instance of the AppDatabase
+         */
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
                 synchronized(this) {

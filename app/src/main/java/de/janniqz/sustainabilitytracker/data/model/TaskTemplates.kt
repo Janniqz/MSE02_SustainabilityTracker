@@ -61,6 +61,10 @@ object TaskTemplates {
         )
     )
 
+    /**
+     * Returns the list of Task Templates for the passed TaskCategory
+     * @see TaskCategory
+     */
     fun getTemplatesByCategory(category: TaskCategory): List<TaskTemplate> {
         return when (category) {
             TaskCategory.CO2 -> co2Templates
@@ -69,6 +73,10 @@ object TaskTemplates {
         }
     }
 
+    /**
+     * Retrieves the Task Template with the given ID.
+     * Used when editing a existing Predefined Task.
+     */
     fun getTemplateById(id: Int): TaskTemplate? {
         return (co2Templates + waterTemplates + wasteTemplates).find { it.id == id }
     }

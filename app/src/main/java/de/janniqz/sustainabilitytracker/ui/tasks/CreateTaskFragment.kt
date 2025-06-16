@@ -10,10 +10,17 @@ import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.databinding.FragmentCreateTaskBinding
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.CustomTaskDialogFragment
 
+/**
+ * Fragment for choosing between creating a new Predefined or Custom Task
+ */
 class CreateTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateTaskBinding
 
+    /**
+     * Base Fragment Initialization
+     * Sets up Buttons
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreateTaskBinding.inflate(inflater, container, false)
 
@@ -22,6 +29,9 @@ class CreateTaskFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Populates Predefined / Custom Buttons with values and sets up their Event Listeners
+     */
     private fun setupButtons() {
         binding.btnPredefined.btnTitle.setText(R.string.task_type_predefined_title)
         binding.btnPredefined.btnDesc.setText(R.string.task_type_predefined_desc)
@@ -38,6 +48,9 @@ class CreateTaskFragment : Fragment() {
         }
     }
 
+    /**
+     * Opens the Custom Task Creation Dialog
+     */
     private fun onCustomTaskClick() {
         val dialog = CustomTaskDialogFragment()
         dialog.show(getParentFragmentManager(), CustomTaskDialogFragment.TAG)

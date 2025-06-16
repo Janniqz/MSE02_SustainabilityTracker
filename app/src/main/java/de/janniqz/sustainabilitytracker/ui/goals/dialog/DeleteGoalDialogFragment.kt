@@ -1,6 +1,5 @@
 package de.janniqz.sustainabilitytracker.ui.goals.dialog
 
-import AppDatabase
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -10,11 +9,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.databinding.DialogConfirmationBinding
 import kotlinx.coroutines.launch
 
-
+/**
+ * Dialog Fragment for Deleting Goals
+ */
 class DeleteGoalDialogFragment: DialogFragment() {
 
     private lateinit var dialogContext: Context
@@ -28,6 +30,9 @@ class DeleteGoalDialogFragment: DialogFragment() {
         const val RESULT_KEY_GOAL_DELETED = "goalDeleted"
     }
 
+    /**
+     * Populates the basic Deletion Dialog with Goal related Text
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogContext = requireContext()
         goal = arguments?.getParcelable("goalData")
@@ -46,6 +51,9 @@ class DeleteGoalDialogFragment: DialogFragment() {
         return dialog
     }
 
+    /**
+     * Deletes the Goal from the Database
+     */
     private fun deleteGoal() {
         val goal = goal!!
         var db = AppDatabase.getInstance(requireContext())

@@ -10,8 +10,14 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.databinding.ComponentTaskTypeButtonBinding
 
+/**
+ * List Adapter responsible for displaying Task Templates
+ */
 class TaskTemplateAdapter(context: Context, taskTemplates: List<TaskTemplate>, private val taskClickFunc: (TaskTemplate) -> Unit) : ArrayAdapter<TaskTemplate>(context, 0, taskTemplates) {
 
+    /**
+     * Initializes a Task Template Display
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = if (convertView == null) {
             ComponentTaskTypeButtonBinding.inflate(LayoutInflater.from(context), parent, false)

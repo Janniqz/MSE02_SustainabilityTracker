@@ -1,6 +1,5 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
-import AppDatabase
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +10,16 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.DialogCustomTaskBinding
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog for creating Custom Tasks
+ */
 open class CustomTaskDialogFragment: DialogFragment() {
 
     protected lateinit var dialogContext: Context
@@ -26,6 +29,9 @@ open class CustomTaskDialogFragment: DialogFragment() {
         const val TAG = "CustomTask"
     }
 
+    /**
+     * Dialog base setup
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogContext = requireContext()
         binding = DialogCustomTaskBinding.inflate(layoutInflater)
@@ -38,6 +44,9 @@ open class CustomTaskDialogFragment: DialogFragment() {
         return dialog
     }
 
+    /**
+     * Dialog field setup
+     */
     protected open fun populateDialog() {
         binding.inputTaskName.inputField.setInputType(InputType.TYPE_CLASS_TEXT)
         binding.inputTaskName.inputContainer.hint = dialogContext.getString(R.string.task_create_name)
@@ -51,6 +60,10 @@ open class CustomTaskDialogFragment: DialogFragment() {
         binding.btnCancel.setOnClickListener { dialog?.dismiss() }
     }
 
+    /**
+     * Creates the Custom Task.
+     * Validates inputs before proceeding.
+     */
     protected open fun onCreateClick() {
         if (!validateData())
             return
@@ -79,9 +92,16 @@ open class CustomTaskDialogFragment: DialogFragment() {
         }
     }
 
+    /**
+     * Validates the current Inputs:
+     * - Task Name is not empty
+     * - Task Category is not empty
+     * - Task Savings is a valid number
+     */
     protected fun validateData(): Boolean {
         var isValid = true
 
+        // Validate Task Name
         val taskNameComponent = binding.inputTaskName
         if (taskNameComponent.inputField.text.isNullOrEmpty()) {
             taskNameComponent.inputContainer.error = getString(R.string.general_required)
@@ -90,6 +110,7 @@ open class CustomTaskDialogFragment: DialogFragment() {
             taskNameComponent.inputContainer.error = null
         }
 
+        // Validate Task Category
         var taskCategory: TaskCategory? = null
         when {
             binding.inputTaskCategory.btnCo2.isChecked -> taskCategory = TaskCategory.CO2
@@ -101,6 +122,7 @@ open class CustomTaskDialogFragment: DialogFragment() {
             isValid = false
         }
 
+        // Validate Saving Value
         val savingsInput = binding.inputTaskSaving
         if (savingsInput.inputField.text.isNullOrEmpty()) {
             savingsInput.inputContainer.error = getString(R.string.general_required)

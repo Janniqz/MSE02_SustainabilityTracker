@@ -1,6 +1,5 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
-import AppDatabase
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -10,11 +9,14 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.DialogConfirmationBinding
 import kotlinx.coroutines.launch
 
-
+/**
+ * Dialog for deleting Tasks
+ */
 class DeleteTaskDialogFragment: DialogFragment() {
 
     private lateinit var dialogContext: Context
@@ -28,6 +30,9 @@ class DeleteTaskDialogFragment: DialogFragment() {
         const val RESULT_KEY_TASK_DELETED = "taskDeleted"
     }
 
+    /**
+     * Populates the basic Deletion Dialog with Task related Text
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogContext = requireContext()
         task = arguments?.getParcelable("taskData")
@@ -46,6 +51,9 @@ class DeleteTaskDialogFragment: DialogFragment() {
         return dialog
     }
 
+    /**
+     * Deletes the Task from the Database
+     */
     private fun deleteTask() {
         val taskData = task!!
         var db = AppDatabase.getInstance(requireContext())

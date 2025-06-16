@@ -4,6 +4,9 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+/**
+ * Entity representing a Task Completion
+ */
 @Entity(
     tableName = "task_completions",
     foreignKeys = [

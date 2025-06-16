@@ -11,8 +11,15 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.databinding.ComponentGoalDisplayBinding
 
+/**
+ * List Adapter responsible for displaying Goals
+ */
 class GoalDisplayAdapter(context: Context, tasks: List<GoalWithProgress>, private val goalEditFunc: (GoalEntity) -> Unit, private val goalDeleteFunc: (GoalEntity) -> Unit) : ArrayAdapter<GoalWithProgress>(context, 0, tasks) {
 
+    /**
+     * Initializes a Goal Display.
+     * Goal Display allows editing / deleting the associated Goal.
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = if (convertView == null) {
             ComponentGoalDisplayBinding.inflate(LayoutInflater.from(context), parent, false)

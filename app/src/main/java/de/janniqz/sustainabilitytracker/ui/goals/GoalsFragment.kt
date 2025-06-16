@@ -1,6 +1,5 @@
 package de.janniqz.sustainabilitytracker.ui.goals
 
-import AppDatabase
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.GoalWithProgress
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import de.janniqz.sustainabilitytracker.databinding.FragmentGoalsBinding
@@ -21,6 +21,10 @@ import de.janniqz.sustainabilitytracker.ui.goals.dialog.DeleteGoalDialogFragment
 import de.janniqz.sustainabilitytracker.ui.goals.dialog.EditGoalDialogFragment
 import kotlinx.coroutines.launch
 
+/**
+ * Fragment displaying the currently existing Goals.
+ * Allows Creation of new Goals.
+ */
 class GoalsFragment : Fragment() {
 
     private lateinit var binding: FragmentGoalsBinding
@@ -29,12 +33,19 @@ class GoalsFragment : Fragment() {
 
     private var currentGoals: MutableList<GoalWithProgress> = mutableListOf()
 
+    /**
+     * Retrieves Binding and Database references on Fragment Creation
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentGoalsBinding.inflate(inflater, container, false)
         database = AppDatabase.getInstance(requireContext())
         return binding.root
     }
 
+    /**
+     * Initializes UI Events and List Adapter.
+     * Loads initial list of Goals.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,6 +66,9 @@ class GoalsFragment : Fragment() {
         loadGoals()
     }
 
+    /**
+     * Sets up Fragment Result Listeners for Goal Creation, Edit, and Deletion
+     */
     private fun createListeners() {
         // Add listener for Goal Creations
         setFragmentResultListener(CreateGoalDialogFragment.REQUEST_KEY) { requestKey, bundle ->
@@ -78,6 +92,9 @@ class GoalsFragment : Fragment() {
         }
     }
 
+    /**
+     * Refreshes the list of currently displayed Goals
+     */
     private fun loadGoals() {
         lifecycleScope.launch {
             val goals = database.goal().getAll()
@@ -104,33 +121,51 @@ class GoalsFragment : Fragment() {
         }
     }
 
+    /**
+     * Creates the Goal Creation Dialog
+     */
     private fun onCreateGoal() {
         val dialog = CreateGoalDialogFragment()
         dialog.show(getParentFragmentManager(), CreateGoalDialogFragment.TAG)
     }
 
+    /**
+     * Creates the Goal Editing Dialog
+     */
     private fun onEditGoal(goal: GoalEntity) {
         val dialog = EditGoalDialogFragment()
         dialog.arguments = bundleOf("goalData" to goal)
         dialog.show(getParentFragmentManager(), EditGoalDialogFragment.TAG)
     }
 
+    /**
+     * Creates the Goal Deletion Dialog
+     */
     private fun onDeleteGoal(goal: GoalEntity) {
         val dialog = DeleteGoalDialogFragment()
         dialog.arguments = bundleOf("goalData" to goal)
         dialog.show(getParentFragmentManager(), DeleteGoalDialogFragment.TAG)
     }
 
+    /**
+     * Creates a Toast after Goal Creation and refreshes the Goal List
+     */
     private fun onGoalCreated() {
         Toast.makeText(requireContext(), R.string.toast_goal_created, Toast.LENGTH_SHORT).show()
         loadGoals()
     }
 
+    /**
+     * Creates a Toast after Goal Editing and refreshes the Goal List
+     */
     private fun onGoalEdited() {
         Toast.makeText(requireContext(), R.string.toast_goal_updated, Toast.LENGTH_SHORT).show()
         loadGoals()
     }
 
+    /**
+     * Creates a Toast after Goal Deletion and refreshes the Goal List
+     */
     private fun onGoalDeleted() {
         Toast.makeText(requireContext(), R.string.toast_goal_deleted, Toast.LENGTH_SHORT).show()
         loadGoals()

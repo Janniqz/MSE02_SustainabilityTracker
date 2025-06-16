@@ -2,6 +2,9 @@ package de.janniqz.sustainabilitytracker.data.model
 
 import de.janniqz.sustainabilitytracker.R
 
+/**
+ * Enumeration describing the different categories a Task can belong to
+ */
 enum class TaskCategory {
     CO2,
     Water,

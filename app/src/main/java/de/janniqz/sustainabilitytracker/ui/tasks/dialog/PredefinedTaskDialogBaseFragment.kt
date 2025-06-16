@@ -10,12 +10,18 @@ import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.databinding.ComponentTextInputPaddingBinding
 import de.janniqz.sustainabilitytracker.databinding.DialogPredefinedTaskBinding
 
+/**
+ * Base class for Predefined Task Creation / Editing Dialogs
+ */
 abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
 
     protected lateinit var dialogContext: Context
     protected lateinit var binding: DialogPredefinedTaskBinding
     protected var taskDataFields: MutableList<ComponentTextInputPaddingBinding> = mutableListOf<ComponentTextInputPaddingBinding>()
 
+    /**
+     * Retrieves references and initializes the Dialog
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         dialogContext = requireContext()
         binding = DialogPredefinedTaskBinding.inflate(layoutInflater)
@@ -29,6 +35,9 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
         return dialog
     }
 
+    /**
+     * Populates base Dialog fields
+     */
     private fun populateBaseDialog() {
         binding.inputTaskName.inputField.setInputType(InputType.TYPE_CLASS_TEXT)
         binding.inputTaskName.inputContainer.hint = dialogContext.getString(R.string.task_create_name)
@@ -37,8 +46,14 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
         binding.btnCancel.setOnClickListener { dialog?.dismiss() }
     }
 
+    /**
+     * Populates Dialog fields with values depending on the specific implementation
+     */
     protected abstract fun populateDialog()
 
+    /**
+     * Creates a number data field for the Dialog
+     */
     protected fun createDataField(helpResource: Int) {
         val inputBinding = ComponentTextInputPaddingBinding.inflate(layoutInflater)
 
@@ -50,6 +65,11 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
         binding.containerRequiredData.addView(inputBinding.root)
     }
 
+    /**
+     * Validates the current Inputs:
+     * - Task Name is not empty
+     * - Task Data Fields are valid numbers (decimal)
+     */
     protected fun validateData(): Boolean {
         var isValid = true
 

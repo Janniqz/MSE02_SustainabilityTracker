@@ -1,15 +1,18 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
-import AppDatabase
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog for creating Predefined Tasks
+ */
 class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
 
     private var taskTemplate: TaskTemplate? = null
@@ -18,6 +21,9 @@ class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
         const val TAG = "CreatePredefinedTask"
     }
 
+    /**
+     * Retrieves the selected Task Template and populates the Dialog Fields
+     */
     override fun populateDialog() {
         taskTemplate = arguments?.getParcelable("taskTemplate")
         taskTemplate?.let { template ->
@@ -31,6 +37,10 @@ class PredefinedTaskDialogCreateFragment : PredefinedTaskDialogBaseFragment() {
         }
     }
 
+    /**
+     * Saves the Task to the Database with the current Inputs.
+     * Validates Data before processing.
+     */
     private fun createTask() {
         if (!validateData())
             return

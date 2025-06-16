@@ -7,6 +7,9 @@ import de.janniqz.sustainabilitytracker.R
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog Fragment for Creating Goals
+ */
 class CreateGoalDialogFragment: GoalDialogBaseFragment() {
 
     companion object {
@@ -15,6 +18,9 @@ class CreateGoalDialogFragment: GoalDialogBaseFragment() {
         const val RESULT_KEY_GOAL_CREATED = "goalCreated"
     }
 
+    /**
+     * Populates the Dialog with base values for Goal Creation
+     */
     override fun populateInitialData() {
         binding.inputGoalCategory.btnCo2.isChecked = true
         binding.inputGoalPeriodicity.btnMonth.isChecked = true
@@ -22,6 +28,10 @@ class CreateGoalDialogFragment: GoalDialogBaseFragment() {
         binding.btnSubmit.text = getString(R.string.goal_create)
     }
 
+    /**
+     * Saves the Goal to the Database with the current Inputs.
+     * Validates Data before processing.
+     */
     override fun onSaveClicked() {
         if (!validateData())
             return

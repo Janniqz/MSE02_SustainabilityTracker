@@ -3,8 +3,14 @@ package de.janniqz.sustainabilitytracker.tools
 import android.icu.util.Calendar
 import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 
+/**
+ * Static class providing various helper functions related to Dates
+ */
 class DateHelper {
     companion object {
+        /**
+         * Resets the Calendar to the start of the day
+         */
         fun Calendar.setToBeginningOfDay(): Calendar {
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
@@ -13,6 +19,12 @@ class DateHelper {
             return this
         }
 
+        /**
+         * Returns a Time Range depending on the passed Periodicity + Focus Date
+         * @param periodicity Periodicity for which the Date Range should be retrieved
+         * @param focusDate Calendar Date the Time Range should be based on
+         * @return Start Date / End Date for passed periodicity
+         */
         fun getCurrentPeriodicityRange(periodicity: TimePeriod, focusDate: Calendar): Pair<Long, Long> {
             val calendar = (focusDate.clone() as Calendar).setToBeginningOfDay()
             var startDate = 0L

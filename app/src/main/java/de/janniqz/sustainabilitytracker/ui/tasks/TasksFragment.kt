@@ -1,6 +1,5 @@
 package de.janniqz.sustainabilitytracker.ui.tasks
 
-import AppDatabase
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.TaskWithCompletions
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskCompletionEntity
@@ -22,6 +22,10 @@ import de.janniqz.sustainabilitytracker.ui.tasks.dialog.DeleteTaskDialogFragment
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogEditFragment
 import kotlinx.coroutines.launch
 
+/**
+ * Fragment displaying existing Tasks.
+ * Allows creating new Tasks and editing / deleting / completing existing ones.
+ */
 class TasksFragment : Fragment() {
 
     private lateinit var binding: FragmentTasksBinding
@@ -30,12 +34,19 @@ class TasksFragment : Fragment() {
 
     private var currentTasks: MutableList<TaskWithCompletions> = mutableListOf()
 
+    /**
+     * Retrieves Binding and Database references on Fragment Creation
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentTasksBinding.inflate(inflater, container, false)
         database = AppDatabase.getInstance(requireContext())
         return binding.root
     }
 
+    /**
+     * Initializes UI and List Adapter.
+     * Retrieves the list of Tasks and creates listeners for editing / deleting.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -53,9 +64,10 @@ class TasksFragment : Fragment() {
         loadTasks()
     }
 
+    /**
+     * Create Task Edit / Delete Listeners
+     */
     private fun createListeners() {
-        // TODO Combine these
-
         // Add listener for Predefined Task Edits
         setFragmentResultListener(PredefinedTaskDialogEditFragment.REQUEST_KEY) { requestKey, bundle ->
             val taskEdited = bundle.getBoolean(PredefinedTaskDialogEditFragment.RESULT_KEY_TASK_EDITED)
@@ -78,6 +90,9 @@ class TasksFragment : Fragment() {
         }
     }
 
+    /**
+     * Update the list of loaded Tasks
+     */
     private fun loadTasks() {
         lifecycleScope.launch {
             val tasks = database.task().getAll()
@@ -89,6 +104,9 @@ class TasksFragment : Fragment() {
         }
     }
 
+    /**
+     * Opens the Task Edit Dialog depending on the Task Type
+     */
     private fun onEditTask(task: TaskEntity) {
         if (task.type == TaskType.Predefined) {
             val dialog = PredefinedTaskDialogEditFragment()
@@ -101,6 +119,9 @@ class TasksFragment : Fragment() {
         }
     }
 
+    /**
+     * Adds a completion for the passed Task Entity
+     */
     private fun onCompleteTask(task: TaskEntity) {
         val completion = TaskCompletionEntity(
             taskId = task.id,
@@ -114,17 +135,26 @@ class TasksFragment : Fragment() {
         }
     }
 
+    /**
+     * Opens the Task Deletion Dialog
+     */
     private fun onDeleteTask(task: TaskEntity) {
         val dialog = DeleteTaskDialogFragment()
         dialog.arguments = bundleOf("taskData" to task)
         dialog.show(getParentFragmentManager(), DeleteTaskDialogFragment.TAG)
     }
 
+    /**
+     * Creates a Toast after Task Editing and refreshes the Task List
+     */
     private fun onTaskEdited() {
         Toast.makeText(requireContext(), R.string.toast_task_updated, Toast.LENGTH_SHORT).show()
         loadTasks()
     }
 
+    /**
+     * Creates a Toast after Task Deletion and refreshes the Task List
+     */
     private fun onTaskDeleted() {
         Toast.makeText(requireContext(), R.string.toast_task_deleted, Toast.LENGTH_SHORT).show()
         loadTasks()

@@ -13,8 +13,14 @@ import de.janniqz.sustainabilitytracker.data.model.TaskWithCompletions
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import de.janniqz.sustainabilitytracker.databinding.ComponentTaskDisplayBinding
 
+/**
+ * List Adapter responsible for displaying Tasks
+ */
 class TaskDisplayAdapter(context: Context, tasks: List<TaskWithCompletions>, private val taskEditFunc: (TaskEntity) -> Unit, private val taskCompleteFunc: (TaskEntity) -> Unit, private val taskDeleteFunc: (TaskEntity) -> Unit) : ArrayAdapter<TaskWithCompletions>(context, 0, tasks) {
 
+    /**
+     * Initializes a Task Display
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = if (convertView == null) {
             ComponentTaskDisplayBinding.inflate(LayoutInflater.from(context), parent, false)

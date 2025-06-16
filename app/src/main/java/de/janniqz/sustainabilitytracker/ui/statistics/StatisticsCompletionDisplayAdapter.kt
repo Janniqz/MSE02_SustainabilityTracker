@@ -13,10 +13,17 @@ import de.janniqz.sustainabilitytracker.databinding.ComponentStatisticsCompletio
 import java.util.Date
 import java.util.Locale
 
+/**
+ * List Adapter responsible for displaying Statistics Completions
+ */
 class StatisticsCompletionDisplayAdapter(context: Context, tasks: List<StatisticsCompletion>) : ArrayAdapter<StatisticsCompletion>(context, 0, tasks) {
 
+    // Date Time Formatter for the Completion Date
     private val dateTimeFormat = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
 
+    /**
+     * Initializes a Statistic Completion Display
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding = if (convertView == null) {
             ComponentStatisticsCompletionDisplayBinding.inflate(LayoutInflater.from(context), parent, false)

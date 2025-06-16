@@ -1,15 +1,18 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
-import AppDatabase
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog for editing Custom Tasks
+ */
 class CustomTaskEditDialogFragment: CustomTaskDialogFragment() {
 
     private var task: TaskEntity? = null
@@ -20,12 +23,19 @@ class CustomTaskEditDialogFragment: CustomTaskDialogFragment() {
         const val RESULT_KEY_TASK_EDITED = "taskEdited"
     }
 
+    /**
+     * Retrieves the existing Task on Dialog Creation
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         task = arguments?.getParcelable("taskData")
 
         return super.onCreateDialog(savedInstanceState)
     }
 
+    /**
+     * Populates Dialog with editing specific values.
+     * Applies values from the existing Task.
+     */
     override fun populateDialog() {
         super.populateDialog()
 
@@ -38,6 +48,10 @@ class CustomTaskEditDialogFragment: CustomTaskDialogFragment() {
         binding.inputTaskCategory.btnWaste.isChecked = task.category == TaskCategory.Waste
     }
 
+    /**
+     * Updates the existing Task.
+     * Validates inputs before proceeding.
+     */
     override fun onCreateClick() {
         if (!validateData())
             return

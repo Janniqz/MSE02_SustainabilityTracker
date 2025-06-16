@@ -1,15 +1,18 @@
 package de.janniqz.sustainabilitytracker.ui.tasks.dialog
 
-import AppDatabase
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
 import de.janniqz.sustainabilitytracker.R
+import de.janniqz.sustainabilitytracker.data.db.AppDatabase
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplate
 import de.janniqz.sustainabilitytracker.data.model.TaskTemplates
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog for editing Predefined Tasks
+ */
 class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
 
     private var task: TaskEntity? = null
@@ -21,6 +24,9 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
         const val RESULT_KEY_TASK_EDITED = "taskEdited"
     }
 
+    /**
+     * Retrieves the passed Task and used Task Template and populates dialog fields
+     */
     override fun populateDialog() {
         task = arguments?.getParcelable("taskData")
         task?.let { taskData ->
@@ -38,6 +44,10 @@ class PredefinedTaskDialogEditFragment : PredefinedTaskDialogBaseFragment() {
         }
     }
 
+    /**
+     * Updates the Predefined Task in the Database.
+     * Validates inputs before proceeding.
+     */
     private fun editTask() {
         if (!validateData())
             return

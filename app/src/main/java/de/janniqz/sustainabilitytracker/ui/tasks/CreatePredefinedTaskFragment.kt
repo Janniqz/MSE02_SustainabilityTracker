@@ -12,16 +12,25 @@ import de.janniqz.sustainabilitytracker.data.model.TaskTemplates
 import de.janniqz.sustainabilitytracker.databinding.FragmentCreatePredefinedTaskBinding
 import de.janniqz.sustainabilitytracker.ui.tasks.dialog.PredefinedTaskDialogCreateFragment
 
+/**
+ * Fragment displaying the existing Task Templates and facilitating the creation of new Predefined Tasks
+ */
 class CreatePredefinedTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentCreatePredefinedTaskBinding
     private lateinit var templateListAdapter: TaskTemplateAdapter
 
+    /**
+     * Base Fragment Initialization
+     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentCreatePredefinedTaskBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+    /**
+     * Sets up Event Listeners and shows the initial list of Task Templates
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,6 +48,9 @@ class CreatePredefinedTaskFragment : Fragment() {
         binding.categorySelection.btnWaste.setOnClickListener { selectCategory(TaskCategory.Waste) }
     }
 
+    /**
+     * Updates the list of Task Templates with the passed category
+     */
     private fun selectCategory(category: TaskCategory) {
         val taskTemplates = TaskTemplates.getTemplatesByCategory(category)
         templateListAdapter.clear()
@@ -46,6 +58,9 @@ class CreatePredefinedTaskFragment : Fragment() {
         templateListAdapter.notifyDataSetChanged()
     }
 
+    /**
+     * Opens the Predefined Task Creation Dialog
+     */
     private fun showTaskDialog(taskTemplate: TaskTemplate) {
         val dialog = PredefinedTaskDialogCreateFragment()
         dialog.arguments = bundleOf("taskTemplate" to taskTemplate)

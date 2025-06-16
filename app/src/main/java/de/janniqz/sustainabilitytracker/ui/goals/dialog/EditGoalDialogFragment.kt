@@ -10,6 +10,9 @@ import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 import de.janniqz.sustainabilitytracker.data.model.entity.GoalEntity
 import kotlinx.coroutines.launch
 
+/**
+ * Dialog Fragment for Editing Goals
+ */
 class EditGoalDialogFragment: GoalDialogBaseFragment() {
 
     companion object {
@@ -20,11 +23,17 @@ class EditGoalDialogFragment: GoalDialogBaseFragment() {
 
     private var goal: GoalEntity? = null
 
+    /**
+     * Retrieves the existing Goal on Dialog Creation
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         goal = arguments?.getParcelable("goalData")
     }
 
+    /**
+     * Populates the Dialog with values from the pre-existing passed Goal
+     */
     override fun populateInitialData() {
         goal?.let { goal ->
             binding.inputGoalName.inputField.setText(goal.name)
@@ -46,6 +55,10 @@ class EditGoalDialogFragment: GoalDialogBaseFragment() {
         binding.btnSubmit.text = getString(R.string.goal_edit)
     }
 
+    /**
+     * Updates the Goal in the Database with the current Inputs.
+     * Validates Data before processing.
+     */
     override fun onSaveClicked() {
         if (!validateData())
             return

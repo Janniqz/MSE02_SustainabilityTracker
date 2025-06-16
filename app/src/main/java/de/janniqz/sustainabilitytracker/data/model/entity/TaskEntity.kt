@@ -7,6 +7,9 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Entity representing a Task
+ */
 @Parcelize
 @Entity(tableName = "tasks")
 data class TaskEntity(

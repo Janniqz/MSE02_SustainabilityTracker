@@ -7,6 +7,9 @@ import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Entity representing a Goal
+ */
 @Parcelize
 @Entity(tableName = "goals")
 data class GoalEntity(
