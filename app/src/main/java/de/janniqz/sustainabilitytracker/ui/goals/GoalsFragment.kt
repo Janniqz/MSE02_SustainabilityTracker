@@ -18,6 +18,7 @@ import de.janniqz.sustainabilitytracker.databinding.FragmentGoalsBinding
 import de.janniqz.sustainabilitytracker.tools.DateHelper
 import de.janniqz.sustainabilitytracker.ui.goals.dialog.CreateGoalDialogFragment
 import de.janniqz.sustainabilitytracker.ui.goals.dialog.DeleteGoalDialogFragment
+import de.janniqz.sustainabilitytracker.ui.goals.dialog.EditGoalDialogFragment
 import kotlinx.coroutines.launch
 
 class GoalsFragment : Fragment() {
@@ -68,6 +69,13 @@ class GoalsFragment : Fragment() {
             if (goalDeleted)
                 onGoalDeleted()
         }
+
+        // Add listener for Goal Edits
+        setFragmentResultListener(EditGoalDialogFragment.REQUEST_KEY) { requestKey, bundle ->
+            val goalEdited = bundle.getBoolean(EditGoalDialogFragment.RESULT_KEY_GOAL_EDITED)
+            if (goalEdited)
+                onGoalEdited()
+        }
     }
 
     private fun loadGoals() {
@@ -102,7 +110,9 @@ class GoalsFragment : Fragment() {
     }
 
     private fun onEditGoal(goal: GoalEntity) {
-        // TODO
+        val dialog = EditGoalDialogFragment()
+        dialog.arguments = bundleOf("goalData" to goal)
+        dialog.show(getParentFragmentManager(), EditGoalDialogFragment.TAG)
     }
 
     private fun onDeleteGoal(goal: GoalEntity) {

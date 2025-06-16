@@ -12,8 +12,8 @@ import kotlinx.parcelize.Parcelize
 data class GoalEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val category: TaskCategory,
-    val periodicity: TimePeriod,
+    var category: TaskCategory,
+    var periodicity: TimePeriod,
 
     var name: String,
     var targetAmount: Float
