@@ -87,12 +87,16 @@ abstract class PredefinedTaskDialogBaseFragment : DialogFragment() {
                 isValid = false
             } else {
                 try {
-                    field.inputField.text.toString().toFloat()
+                    if (field.inputField.text.toString().toFloat() <= 0) {
+                        field.inputContainer.error = getString(R.string.general_invalid_number)
+                        isValid = false
+                    }
+                    else
+                        field.inputContainer.error = null
                 } catch (_: NumberFormatException) {
                     field.inputContainer.error = getString(R.string.general_invalid_number)
                     isValid = false
                 }
-                field.inputContainer.error = null
             }
         }
 

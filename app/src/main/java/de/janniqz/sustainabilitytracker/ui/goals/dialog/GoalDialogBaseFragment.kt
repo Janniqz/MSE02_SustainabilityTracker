@@ -98,12 +98,16 @@ abstract class GoalDialogBaseFragment : DialogFragment() {
             isValid = false
         } else {
             try {
-                valueInput.inputField.text.toString().toFloat()
+                if (valueInput.inputField.text.toString().toFloat() <= 0) {
+                    valueInput.inputContainer.error = getString(R.string.general_invalid_number)
+                    isValid = false
+                }
+                else
+                    valueInput.inputContainer.error = null
             } catch (_: NumberFormatException) {
                 valueInput.inputContainer.error = getString(R.string.general_invalid_number)
                 isValid = false
             }
-            valueInput.inputContainer.error = null
         }
 
         return isValid

@@ -129,12 +129,16 @@ open class CustomTaskDialogFragment: DialogFragment() {
             isValid = false
         } else {
             try {
-                savingsInput.inputField.text.toString().toFloat()
+                if (savingsInput.inputField.text.toString().toFloat() <= 0) {
+                    savingsInput.inputContainer.error = getString(R.string.general_invalid_number)
+                    isValid = false
+                }
+                else
+                    savingsInput.inputContainer.error = null
             } catch (_: NumberFormatException) {
                 savingsInput.inputContainer.error = getString(R.string.general_invalid_number)
                 isValid = false
             }
-            savingsInput.inputContainer.error = null
         }
 
         return isValid
