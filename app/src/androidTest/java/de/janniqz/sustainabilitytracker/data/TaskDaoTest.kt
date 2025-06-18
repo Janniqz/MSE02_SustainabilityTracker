@@ -1,9 +1,10 @@
-package de.janniqz.sustainabilitytracker.data.db.dao
+package de.janniqz.sustainabilitytracker.data
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.janniqz.sustainabilitytracker.data.db.AppDatabase
+import de.janniqz.sustainabilitytracker.data.db.dao.TaskDao
 import de.janniqz.sustainabilitytracker.data.model.TaskCategory
 import de.janniqz.sustainabilitytracker.data.model.TaskType
 import de.janniqz.sustainabilitytracker.data.model.entity.TaskEntity
