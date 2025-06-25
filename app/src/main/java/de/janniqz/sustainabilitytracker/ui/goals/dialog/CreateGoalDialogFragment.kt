@@ -22,6 +22,8 @@ class CreateGoalDialogFragment: GoalDialogBaseFragment() {
      * Populates the Dialog with base values for Goal Creation
      */
     override fun populateInitialData() {
+        binding.dialogGoalTitle.setText(R.string.goal_create)
+
         binding.inputGoalCategory.btnCo2.isChecked = true
         binding.inputGoalPeriodicity.btnMonth.isChecked = true
 

@@ -36,6 +36,8 @@ class EditGoalDialogFragment: GoalDialogBaseFragment() {
      */
     override fun populateInitialData() {
         goal?.let { goal ->
+            binding.dialogGoalTitle.setText(R.string.goal_edit)
+
             binding.inputGoalName.inputField.setText(goal.name)
             binding.inputGoalTarget.inputField.setText(goal.targetAmount.toString())
 
