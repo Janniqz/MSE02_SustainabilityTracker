@@ -33,7 +33,7 @@ class DateHelper {
             when (periodicity) {
                 TimePeriod.WEEK -> {
                     // Start of first day of week
-                    calendar.set(Calendar.DAY_OF_WEEK, 2)  // Monday
+                    calendar.add(Calendar.DAY_OF_WEEK, 2 - calendar.get(Calendar.DAY_OF_WEEK))  // Monday
                     startDate = calendar.timeInMillis
 
                     // End of last day of week

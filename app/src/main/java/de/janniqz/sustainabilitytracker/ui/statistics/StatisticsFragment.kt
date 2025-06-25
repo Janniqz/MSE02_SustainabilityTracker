@@ -24,6 +24,8 @@ import de.janniqz.sustainabilitytracker.data.model.TimePeriod
 import de.janniqz.sustainabilitytracker.databinding.FragmentStatisticsBinding
 import de.janniqz.sustainabilitytracker.tools.DateHelper
 import de.janniqz.sustainabilitytracker.tools.DateHelper.Companion.setToBeginningOfDay
+import de.janniqz.sustainabilitytracker.tools.ICalendar
+import de.janniqz.sustainabilitytracker.tools.SystemCalendar
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -32,13 +34,15 @@ import java.util.Locale
  */
 class StatisticsFragment : Fragment() {
 
+    var calendar: ICalendar = SystemCalendar()
+    var currentFocusDate: Calendar = calendar.getCurrentCalendar()
+
     private lateinit var binding: FragmentStatisticsBinding
     private lateinit var completionListAdapter: StatisticsCompletionDisplayAdapter
     private lateinit var database: AppDatabase
 
     private var selectedTimePeriod: TimePeriod = TimePeriod.MONTH
     private var selectedCategory: TaskCategory = TaskCategory.CO2
-    private var currentFocusDate: Calendar = Calendar.getInstance()
 
     private var startDate: Long = -1L
     private var endDate: Long = -1L
@@ -115,7 +119,7 @@ class StatisticsFragment : Fragment() {
             return
 
         selectedTimePeriod = newPeriodType
-        currentFocusDate = Calendar.getInstance()
+        currentFocusDate = calendar.getCurrentCalendar()
         calculateCurrentPeriodDates()
         updatePeriodText()
         updateCompletions()
@@ -150,8 +154,8 @@ class StatisticsFragment : Fragment() {
      * Updates the UI Elements displaying the current Time Range
      */
     private fun updatePeriodText() {
-        val startCal = Calendar.getInstance().apply { timeInMillis = startDate }
-        val endCal = Calendar.getInstance().apply { timeInMillis = endDate }
+        val startCal = calendar.getCurrentCalendar().apply { timeInMillis = startDate }
+        val endCal = calendar.getCurrentCalendar().apply { timeInMillis = endDate }
 
         val periodText = when (selectedTimePeriod) {
             TimePeriod.WEEK -> "${shortDateFormat.format(startCal.time)} - ${shortDateFormat.format(endCal.time)}"
@@ -273,20 +277,20 @@ class StatisticsFragment : Fragment() {
      * A bar is added for every day of the week. Labels reflect the day in the month.
      */
     private fun getWeeklyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
-        val calendar = Calendar.getInstance()
-        calendar.timeInMillis = startDate
+        val weekCalendar = calendar.getCurrentCalendar()
+        weekCalendar.timeInMillis = startDate
 
         // Loop through all days of the week
         for (i in 0 until 7) {
-            val dayStart = calendar.timeInMillis
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
-            val dayEnd = calendar.timeInMillis - 1
+            val dayStart = weekCalendar.timeInMillis
+            weekCalendar.add(Calendar.DAY_OF_MONTH, 1)
+            val dayEnd = weekCalendar.timeInMillis - 1
 
             val savingsForDay = getTotalSavingsBetween(dayStart, dayEnd)
             barEntries.add(BarEntry(i.toFloat(), savingsForDay))
 
             // Day in month
-            val dayLabelCalendar = Calendar.getInstance().apply { timeInMillis = dayStart }
+            val dayLabelCalendar = calendar.getCurrentCalendar().apply { timeInMillis = dayStart }
             labels.add(dayOfMonthFormat.format(dayLabelCalendar.time))
         }
     }
@@ -296,12 +300,12 @@ class StatisticsFragment : Fragment() {
      * A bar is added for every first, 5th, and last day of the month.
      */
     private fun getMonthlyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
-        val monthCalendar = Calendar.getInstance().apply { timeInMillis = startDate }
+        val monthCalendar = calendar.getCurrentCalendar().apply { timeInMillis = startDate }
         val daysInMonth = monthCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
         // Loop through all days of the month
         for (i in 0 until daysInMonth) {
-            val currentDayCal = Calendar.getInstance().apply {
+            val currentDayCal = calendar.getCurrentCalendar().apply {
                 timeInMillis = startDate
                 add(Calendar.DAY_OF_MONTH, i)
             }.setToBeginningOfDay()
@@ -331,7 +335,7 @@ class StatisticsFragment : Fragment() {
     private fun getYearlyChartEntries(barEntries: ArrayList<BarEntry>, labels: ArrayList<String>) {
         // Loop through all months of the year
         for (i in 0 until 12) {
-            val monthStartCal = Calendar.getInstance().apply {
+            val monthStartCal = calendar.getCurrentCalendar().apply {
                 timeInMillis = startDate
                 add(Calendar.MONTH, i)
                 set(Calendar.DAY_OF_MONTH, 1)
