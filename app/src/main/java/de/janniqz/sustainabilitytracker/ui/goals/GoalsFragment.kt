@@ -95,7 +95,7 @@ class GoalsFragment : Fragment() {
     /**
      * Refreshes the list of currently displayed Goals
      */
-    private fun loadGoals() {
+    fun loadGoals() {
         lifecycleScope.launch {
             val goals = database.goal().getAll()
             val goalsWithProgress = mutableListOf<GoalWithProgress>()
@@ -114,6 +114,7 @@ class GoalsFragment : Fragment() {
 
                 goalsWithProgress.add(GoalWithProgress(goal, progress))
             }
+
 
             currentGoals.clear()
             currentGoals.addAll(goalsWithProgress)
