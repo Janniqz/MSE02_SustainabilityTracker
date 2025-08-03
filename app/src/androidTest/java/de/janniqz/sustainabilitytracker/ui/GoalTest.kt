@@ -1,10 +1,13 @@
 package de.janniqz.sustainabilitytracker.ui
 
 import android.icu.util.Calendar
+import android.view.View
 import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.replaceText
 import androidx.test.espresso.action.ViewActions.typeText
@@ -12,6 +15,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.isRoot
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -33,12 +37,12 @@ import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
+import org.hamcrest.Matcher
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
@@ -139,9 +143,12 @@ class GoalTest {
         val updatedGoalName = "My Edited Goal"
         val updatedTarget = "75.0" // Target will actually be lowered for this example
 
+        // Delay to make sure everything is initialized
+        onView(isRoot()).perform(waitFor(100))
+
         // Click the Edit button for the goal
         onView(allOf(
-            withId(R.id.btn_edit), // The ID of the edit button in item_goal.xml
+            withId(R.id.btn_edit), // The ID of the edit button in component_goal_display.xml
             isDisplayed()
         )).perform(click())
 
@@ -208,6 +215,9 @@ class GoalTest {
         advanceUntilIdle()
 
         // ACT
+        // Delay to make sure everything is initialized
+        onView(isRoot()).perform(waitFor(100))
+
         onView(allOf(
             withId(R.id.btn_delete), // The ID of the delete button in item_goal.xml
             isDisplayed()
@@ -221,5 +231,21 @@ class GoalTest {
 
         // ASSERT
         onView(withId(R.id.goal_list)).check(matches(not(hasDescendant(withText(goalToDeleteName)))))
+    }
+
+    private fun waitFor(delay: Long) : ViewAction {
+        return object: ViewAction {
+            override fun getDescription(): String? {
+                return "Delay for $delay"
+            }
+
+            override fun getConstraints(): Matcher<View?>? {
+                return isRoot()
+            }
+
+            override fun perform(uiController: UiController?, view: View?) {
+                uiController?.loopMainThreadForAtLeast(100)
+            }
+        }
     }
 }
