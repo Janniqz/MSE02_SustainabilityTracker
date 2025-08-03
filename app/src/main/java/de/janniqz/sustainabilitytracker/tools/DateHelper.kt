@@ -32,8 +32,12 @@ class DateHelper {
 
             when (periodicity) {
                 TimePeriod.WEEK -> {
+                    // Get the correct day offset (week starts on Monday)
+                    val dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
+                    val dayOffset = (dayOfWeek + 7 - Calendar.MONDAY) % 7
+
                     // Start of first day of week
-                    calendar.add(Calendar.DAY_OF_WEEK, 2 - calendar.get(Calendar.DAY_OF_WEEK))  // Monday
+                    calendar.add(Calendar.DAY_OF_YEAR, -dayOffset)  // Monday
                     startDate = calendar.timeInMillis
 
                     // End of last day of week
